@@ -1,58 +1,59 @@
 a {
-    color: #ffd6d6; /* Color claro para enlaces en tono rosa pastel */
+    color: #ffe9b2; /* Color claro para enlaces en tono amarillo pastel */
 }
 
 span {
-    color: #e88a8a; /* Rosa oscuro */
+    color: #ffd36a; /* Amarillo oscuro */
 }
 
 footer {
-    background-color: #e88a8a; /* Rosa oscuro */
+    background-color: #ffd36a; /* Amarillo oscuro */
     opacity: 0.8;
 }
 
 header {
-    background-color: #e88a8a; /* Rosa oscuro */
+    background-color: #ffd36a; /* Amarillo oscuro */
     opacity: 0.9;
 }
 
 .sidebar {
-    background-color: #ffbcbc; /* Rosa pastel suave */
+    background-color: #ffe9b2; /* Amarillo pastel suave */
     opacity: 0.7;
 }
 
 main {
-    background-color: #ffe5e5; /* Fondo en tono rosa claro pastel */
+    background-color: #fff5d6; /* Fondo en tono amarillo claro pastel */
+    opacity: 0.7;
 }
 
 form {
-    background-color: #e88a8a; /* Rosa oscuro */
+    background-color: #ffd36a; /* Amarillo oscuro */
     padding: 2%;
     border-radius: 8px;
-    color: #ffd6d6; /* Texto claro en rosa pastel */
+    color: #ffe9b2; /* Texto claro en amarillo pastel */
 }
 
 .form-control {
-    background-color: #ffbcbc; /* Fondo en rosa claro */
-    border: 2px solid #ffbcbc; /* Borde rosa claro */
+    background-color: #ffe9b2; /* Fondo en amarillo claro */
+    border: 2px solid #ffe9b2; /* Borde amarillo claro */
     border-radius: 5px;
     font-size: 16px;
 }
 
     .form-control:hover {
-        background-color: #ffd6d6; /* Rosa pastel más claro */
+        background-color: #fff5d6; /* Amarillo pastel más claro */
         cursor: pointer;
     }
 
     .form-control:focus, .btn:hover {
-        background-color: #ffbcbc; /* Rosa claro */
+        background-color: #ffe9b2; /* Amarillo claro */
         outline: none;
-        border: 2px solid #ffe5e5; /* Rosa pastel */
+        border: 2px solid #fff5d6; /* Amarillo pastel */
     }
 
 .btn, .btn-primary {
-    background-color: #ffbcbc; /* Fondo en rosa claro */
-    border: 2px solid #ffd6d6; /* Rosa pastel */
+    background-color: #ffe9b2; /* Fondo en amarillo claro */
+    border: 2px solid #ffe9b2; /* Amarillo pastel */
     border-radius: 5px;
     font-size: 16px;
     margin-top: 2%;
@@ -65,23 +66,23 @@ form {
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #ffe5e5; /* Fondo en rosa pastel claro */
+    background-color: #fff5d6; /* Fondo en amarillo pastel claro */
 }
 
 thead tr {
-    border: 1px solid #ffbcbc;
+    border: 1px solid #ffe9b2;
     padding: 8px;
     text-align: left;
-    background-color: #e88a8a;
+    background-color: #ffd36a;
     color: white;
 }
 
 tbody tr {
-    background-color: #ffe5e5; /* Rosa claro pastel */
+    background-color: #fff5d6; /* Amarillo claro pastel */
 }
 
     tbody tr:hover {
-        background-color: #ffbcbc; /* Rosa claro */
+        background-color: #ffe9b2; /* Amarillo claro */
     }
 
 /* Fondo personalizado para la tarjeta */
@@ -90,7 +91,7 @@ tbody tr {
     border: none;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
-    background: linear-gradient(135deg, #ffe5e5, #ffd6d6); /* Degradado en tonos de rosa pastel */
+    background: linear-gradient(135deg, #fff5d6, #ffe9b2); /* Degradado en tonos de amarillo pastel */
 }
 
 /* Imagen circular con tamaño fijo */
@@ -101,13 +102,13 @@ tbody tr {
     border-radius: 50%;
     margin: 15px auto;
     display: block;
-    border: 4px solid #ffe5e5; /* Borde claro pastel */
+    border: 4px solid #fff5d6; /* Borde claro pastel */
 }
 
 /* Botones personalizados */
 .btn-custom {
-    background-color: #ffbcbc; /* Rosa claro */
-    color: #ffe5e5; /* Texto claro */
+    background-color: #ffe9b2; /* Amarillo claro */
+    color: #fff5d6; /* Texto claro */
     border: none;
     border-radius: 20px;
     padding: 8px 16px;
@@ -116,5 +117,5 @@ tbody tr {
 }
 
     .btn-custom:hover {
-        background-color: #e88a8a; /* Rosa oscuro */
+        background-color: #ffd36a; /* Amarillo oscuro */
     }
