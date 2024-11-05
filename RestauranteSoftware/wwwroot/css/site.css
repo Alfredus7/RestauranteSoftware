@@ -10,7 +10,7 @@ body, html {
     overflow-x: hidden;
 }
 
-a, .field-validation-error, span {
+a, .field-validation-error, span, .nav-link {
     color: #007acc; /* Azul brillante */
 }
 
@@ -35,6 +35,7 @@ main {
     border: none;
     border-radius: 10%;
     background-color: #ffd700; /* Amarillo brillante */
+    color: #007acc; /* Azul brillante */
 }
 
 .card-img-top {
@@ -92,17 +93,18 @@ table {
 }
 
 thead tr {
-    border: 1px solid #ffd966; /* Bordes amarillos */
+    background-color: rgb(255, 224, 133); /* Bordes amarillos */
     padding: 8px;
     text-align: left;
-    background-color: #ffd700; /* Fondo del encabezado amarillo brillante */
-    color: white;
+    background-color: #fff1a1; /* Fondo del encabezado amarillo brillante */
+    color: rgb(31, 0, 167);
 }
 
 tbody tr {
-    background-color: #ffe066; /* Fondo amarillo intermedio */
+    color: rgb(31, 0, 167);
+    background-color: #ffd52e; /* Fondo amarillo intermedio */
 }
 
     tbody tr:hover {
-        background-color: #ffd966; /* Fondo amarillo más oscuro al pasar el mouse */
+        background-color: #b4bcff; /* Fondo amarillo más oscuro al pasar el mouse */
     }

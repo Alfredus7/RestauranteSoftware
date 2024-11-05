@@ -59,7 +59,7 @@ namespace RestauranteSoftware.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PedidoId,ComidaId")] DetallesPedidosEntitys detallesPedidosEntitys)
+        public async Task<IActionResult> Create([Bind("Id,PedidoId,ComidaId,precioTotal,FechaOrden")] DetallesPedidosEntitys detallesPedidosEntitys)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +95,7 @@ namespace RestauranteSoftware.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,PedidoId,ComidaId")] DetallesPedidosEntitys detallesPedidosEntitys)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,PedidoId,ComidaId,precioTotal,FechaOrden")] DetallesPedidosEntitys detallesPedidosEntitys)
         {
             if (id != detallesPedidosEntitys.Id)
             {

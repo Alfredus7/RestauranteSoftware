@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestauranteSoftware.Data;
 
@@ -11,9 +12,11 @@ using RestauranteSoftware.Data;
 namespace RestauranteSoftware.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241105230635_arreglopedidos")]
+    partial class arreglopedidos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,17 +71,9 @@ namespace RestauranteSoftware.Data.Migrations
                         .HasColumnType("int")
                         .HasColumnName("comida");
 
-                    b.Property<DateTime>("FechaOrden")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("fecha");
-
                     b.Property<int>("PedidoId")
                         .HasColumnType("int")
                         .HasColumnName("pedido");
-
-                    b.Property<int>("precioTotal")
-                        .HasColumnType("int")
-                        .HasColumnName("precioTotal");
 
                     b.HasKey("Id");
 

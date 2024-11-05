@@ -22,7 +22,8 @@ namespace RestauranteSoftware.Controllers
         // GET: Pedidos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pedidos.ToListAsync());
+            var applicationDbContext = _context.Pedidos.Include(p => p.EstadoPedido);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Pedidos/Details/5
@@ -34,6 +35,7 @@ namespace RestauranteSoftware.Controllers
             }
 
             var pedidosEntitys = await _context.Pedidos
+                .Include(p => p.EstadoPedido)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (pedidosEntitys == null)
             {
@@ -46,6 +48,7 @@ namespace RestauranteSoftware.Controllers
         // GET: Pedidos/Create
         public IActionResult Create()
         {
+            ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre");
             return View();
         }
 
@@ -62,6 +65,7 @@ namespace RestauranteSoftware.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre", pedidosEntitys.EstadoId);
             return View(pedidosEntitys);
         }
 
@@ -78,6 +82,7 @@ namespace RestauranteSoftware.Controllers
             {
                 return NotFound();
             }
+            ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre", pedidosEntitys.EstadoId);
             return View(pedidosEntitys);
         }
 
@@ -113,6 +118,7 @@ namespace RestauranteSoftware.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre", pedidosEntitys.EstadoId);
             return View(pedidosEntitys);
         }
 
@@ -125,6 +131,7 @@ namespace RestauranteSoftware.Controllers
             }
 
             var pedidosEntitys = await _context.Pedidos
+                .Include(p => p.EstadoPedido)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (pedidosEntitys == null)
             {

@@ -21,6 +21,14 @@ namespace Data.Data.Entitys
         [Column("comida")]
         public int ComidaId { get; set; }
 
+        [Column("precioTotal")]
+        public int precioTotal { get; set; }
+
+        [Column("fecha")]
+        public DateTime FechaOrden { get; set; }
+
+
+
         [ForeignKey("PedidoId")]
         public PedidosEntitys? Pedido { get; set; }
 
