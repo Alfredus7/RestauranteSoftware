@@ -10,27 +10,45 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="ImagenUrl" class="control-label"></label>
+                <div class="input-group">
+                    <input asp-for="ImagenUrl" class="form-control" id="imagenUrl" readonly />
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-secondary" onclick="selectImage()">Seleccionar Imagen</button>
+                    </div>
+                </div>
+                <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="showImagePreview(event)" />
+                <span asp-validation-for="ImagenUrl" class="text-danger"></span>
+            </div>
+
+      @*       <!-- Vista previa de la imagen seleccionada -->
+            <div class="form-group">
+                <label>Vista previa de la imagen:</label>
+                <img id="imagePreview" src="#" alt="Vista previa" style="display:none; max-width: 100%; height: auto;" />
+            </div> *@
+
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Precio" class="control-label"></label>
                 <input asp-for="Precio" class="form-control" />
                 <span asp-validation-for="Precio" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Descripcion" class="control-label"></label>
                 <input asp-for="Descripcion" class="form-control" />
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="TipoPlatoId" class="control-label"></label>
-                <select asp-for="TipoPlatoId" class ="form-control" asp-items="ViewBag.TipoPlatoId"></select>
-            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -43,5 +61,35 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        function selectImage() {
+            document.getElementById('fileInput').click();
+        }
+
+        function showImagePreview(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const imageUrl = e.target.result;
+                // Mostrar la URL en el campo de texto
+                document.getElementById('imagenUrl').value = imageUrl;
+
+                // Mostrar la imagen de vista previa
+                const previewImage = document.getElementById('imagePreview');
+                previewImage.style.display = 'block';
+                previewImage.src = imageUrl;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
 }
+
+

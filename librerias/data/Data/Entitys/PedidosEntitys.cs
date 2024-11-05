@@ -20,11 +20,5 @@ namespace Data.Data.Entitys
 
         [Column("estado")]
         public int EstadoId { get; set; }
-
-        [ForeignKey("TipoPedidoId")]
-        public TiposPedidosEntitys? TipoPedido { get; set; }
-
-        [ForeignKey("EstadoId")]
-        public EstadosPedidosEntitys? EstadoPedido { get; set; }
     }
 }

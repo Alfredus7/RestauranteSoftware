@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestauranteSoftware.Data;
 
@@ -11,9 +12,11 @@ using RestauranteSoftware.Data;
 namespace RestauranteSoftware.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241105215131_dropTypos")]
+    partial class dropTypos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,6 +52,10 @@ namespace RestauranteSoftware.Data.Migrations
                     b.Property<decimal>("Precio")
                         .HasColumnType("decimal(18,2)")
                         .HasColumnName("precio");
+
+                    b.Property<int>("TipoPlatoId")
+                        .HasColumnType("int")
+                        .HasColumnName("tipo");
 
                     b.HasKey("Id");
 
@@ -118,6 +125,8 @@ namespace RestauranteSoftware.Data.Migrations
                         .HasColumnName("tipo_pedido");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EstadoId");
 
                     b.ToTable("pedidos");
                 });
@@ -341,6 +350,17 @@ namespace RestauranteSoftware.Data.Migrations
                     b.Navigation("Comida");
 
                     b.Navigation("Pedido");
+                });
+
+            modelBuilder.Entity("Data.Data.Entitys.PedidosEntitys", b =>
+                {
+                    b.HasOne("Data.Data.Entitys.EstadosPedidosEntitys", "EstadoPedido")
+                        .WithMany()
+                        .HasForeignKey("EstadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EstadoPedido");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -1,121 +1,108 @@
-a {
-    color: #ffe9b2; /* Color claro para enlaces en tono amarillo pastel */
+Ôªø/* General */
+body, html {
+    background-image: url('https://images7.alphacoders.com/972/972466.png');
+    background-attachment: fixed;
+    background-position: bottom;
+    background-size: cover;
+    color: #007acc;
+    font-family: 'Source Sans Pro', sans-serif;
+    height: 100%;
+    overflow-x: hidden;
 }
 
-span {
-    color: #ffd36a; /* Amarillo oscuro */
+a, .field-validation-error, span {
+    color: #007acc; /* Azul brillante */
 }
 
-footer {
-    background-color: #ffd36a; /* Amarillo oscuro */
-    opacity: 0.8;
-}
-
-header {
-    background-color: #ffd36a; /* Amarillo oscuro */
+/* Layout Components */
+header, footer {
+    background-color: #ffdd55; /* Amarillo claro */
     opacity: 0.9;
 }
 
-.sidebar {
-    background-color: #ffe9b2; /* Amarillo pastel suave */
-    opacity: 0.7;
-}
-
 main {
-    background-color: #fff5d6; /* Fondo en tono amarillo claro pastel */
-    opacity: 0.7;
+    background-color: rgba(255, 236, 128, 0.7); /* Amarillo brillante semitransparente */
 }
 
+.sidebar {
+    color: #007acc; /* Azul brillante */
+    background-color: #ffcd35; /* Amarillo brillante */
+    opacity: 0.8;
+}
+
+/* Card */
+.card {
+    border: none;
+    border-radius: 10%;
+    background-color: #ffd700; /* Amarillo brillante */
+}
+
+.card-img-top {
+    border-radius: 10%;
+    display: block;
+    height: 24em;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* Form */
 form {
-    background-color: #ffd36a; /* Amarillo oscuro */
+    background-color: #ffd700; /* Amarillo brillante */
     padding: 2%;
     border-radius: 8px;
-    color: #ffe9b2; /* Texto claro en amarillo pastel */
 }
 
 .form-control {
-    background-color: #ffe9b2; /* Fondo en amarillo claro */
-    border: 2px solid #ffe9b2; /* Borde amarillo claro */
+    background-color: #ffec99; /* Amarillo suave */
+    border: 2px solid #ffd700; /* Amarillo brillante */
     border-radius: 5px;
     font-size: 16px;
 }
 
     .form-control:hover {
-        background-color: #fff5d6; /* Amarillo pastel m·s claro */
+        background-color: #ffdd55; /* Amarillo claro */
         cursor: pointer;
     }
 
-    .form-control:focus, .btn:hover {
-        background-color: #ffe9b2; /* Amarillo claro */
+    .form-control:focus {
+        background-color: #ffd966; /* Amarillo intermedio */
         outline: none;
-        border: 2px solid #fff5d6; /* Amarillo pastel */
+        border: 2px solid #ffcc33; /* Amarillo m√°s oscuro */
     }
 
+/* Buttons */
 .btn, .btn-primary {
-    background-color: #ffe9b2; /* Fondo en amarillo claro */
-    border: 2px solid #ffe9b2; /* Amarillo pastel */
+    background-color: #ffd738; /* Amarillo claro */
     border-radius: 5px;
     font-size: 16px;
     margin-top: 2%;
 }
 
-    .btn:hover {
+    .btn:hover, .btn:focus, .btn:after {
+        background-color: #ffe991; /* Amarillo intermedio */
+        border-radius: 5px;
         cursor: pointer;
     }
 
+/* Table */
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #fff5d6; /* Fondo en amarillo pastel claro */
+    background-color: #fff2cc; /* Fondo amarillo claro */
 }
 
 thead tr {
-    border: 1px solid #ffe9b2;
+    border: 1px solid #ffd966; /* Bordes amarillos */
     padding: 8px;
     text-align: left;
-    background-color: #ffd36a;
+    background-color: #ffd700; /* Fondo del encabezado amarillo brillante */
     color: white;
 }
 
 tbody tr {
-    background-color: #fff5d6; /* Amarillo claro pastel */
+    background-color: #ffe066; /* Fondo amarillo intermedio */
 }
 
     tbody tr:hover {
-        background-color: #ffe9b2; /* Amarillo claro */
-    }
-
-/* Fondo personalizado para la tarjeta */
-.card-custom {
-    width: 18rem;
-    border: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    border-radius: 10px;
-    background: linear-gradient(135deg, #fff5d6, #ffe9b2); /* Degradado en tonos de amarillo pastel */
-}
-
-/* Imagen circular con tamaÒo fijo */
-.card-img-custom {
-    height: 150px;
-    width: 150px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin: 15px auto;
-    display: block;
-    border: 4px solid #fff5d6; /* Borde claro pastel */
-}
-
-/* Botones personalizados */
-.btn-custom {
-    background-color: #ffe9b2; /* Amarillo claro */
-    color: #fff5d6; /* Texto claro */
-    border: none;
-    border-radius: 20px;
-    padding: 8px 16px;
-    transition: background-color 0.3s ease;
-    margin: 5px;
-}
-
-    .btn-custom:hover {
-        background-color: #ffd36a; /* Amarillo oscuro */
+        background-color: #ffd966; /* Fondo amarillo m√°s oscuro al pasar el mouse */
     }

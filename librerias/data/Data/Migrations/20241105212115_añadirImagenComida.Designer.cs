@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestauranteSoftware.Data;
 
@@ -11,9 +12,11 @@ using RestauranteSoftware.Data;
 namespace RestauranteSoftware.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241105212115_añadirImagenComida")]
+    partial class añadirImagenComida
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,7 +53,13 @@ namespace RestauranteSoftware.Data.Migrations
                         .HasColumnType("decimal(18,2)")
                         .HasColumnName("precio");
 
+                    b.Property<int>("TipoPlatoId")
+                        .HasColumnType("int")
+                        .HasColumnName("tipo");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TipoPlatoId");
 
                     b.ToTable("comidas");
                 });
@@ -119,7 +128,49 @@ namespace RestauranteSoftware.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EstadoId");
+
+                    b.HasIndex("TipoPedidoId");
+
                     b.ToTable("pedidos");
+                });
+
+            modelBuilder.Entity("Data.Data.Entitys.TiposPedidosEntitys", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id_tipo_pedido");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("nombre");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tipos_pedidos");
+                });
+
+            modelBuilder.Entity("Data.Data.Entitys.TiposPlatosEntitys", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id_tipo_plato");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("nombre");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tipos_platos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -324,6 +375,17 @@ namespace RestauranteSoftware.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Data.Data.Entitys.ComidasEntitys", b =>
+                {
+                    b.HasOne("Data.Data.Entitys.TiposPlatosEntitys", "TipoPlato")
+                        .WithMany()
+                        .HasForeignKey("TipoPlatoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TipoPlato");
+                });
+
             modelBuilder.Entity("Data.Data.Entitys.DetallesPedidosEntitys", b =>
                 {
                     b.HasOne("Data.Data.Entitys.ComidasEntitys", "Comida")
@@ -341,6 +403,25 @@ namespace RestauranteSoftware.Data.Migrations
                     b.Navigation("Comida");
 
                     b.Navigation("Pedido");
+                });
+
+            modelBuilder.Entity("Data.Data.Entitys.PedidosEntitys", b =>
+                {
+                    b.HasOne("Data.Data.Entitys.EstadosPedidosEntitys", "EstadoPedido")
+                        .WithMany()
+                        .HasForeignKey("EstadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Data.Entitys.TiposPedidosEntitys", "TipoPedido")
+                        .WithMany()
+                        .HasForeignKey("TipoPedidoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EstadoPedido");
+
+                    b.Navigation("TipoPedido");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

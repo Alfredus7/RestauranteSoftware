@@ -22,8 +22,7 @@ namespace RestauranteSoftware.Controllers
         // GET: Comidas
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Comidas.Include(c => c.TipoPlato);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Comidas.ToListAsync());
         }
 
         // GET: Comidas/Details/5
@@ -35,7 +34,6 @@ namespace RestauranteSoftware.Controllers
             }
 
             var comidasEntitys = await _context.Comidas
-                .Include(c => c.TipoPlato)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (comidasEntitys == null)
             {
@@ -48,7 +46,6 @@ namespace RestauranteSoftware.Controllers
         // GET: Comidas/Create
         public IActionResult Create()
         {
-            ViewData["TipoPlatoId"] = new SelectList(_context.TiposPlatos, "Id", "Nombre");
             return View();
         }
 
@@ -57,7 +54,7 @@ namespace RestauranteSoftware.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Precio,Descripcion,TipoPlatoId")] ComidasEntitys comidasEntitys)
+        public async Task<IActionResult> Create([Bind("Id,ImagenUrl,Nombre,Precio,Descripcion")] ComidasEntitys comidasEntitys)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +62,6 @@ namespace RestauranteSoftware.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoPlatoId"] = new SelectList(_context.TiposPlatos, "Id", "Nombre", comidasEntitys.TipoPlatoId);
             return View(comidasEntitys);
         }
 
@@ -82,7 +78,6 @@ namespace RestauranteSoftware.Controllers
             {
                 return NotFound();
             }
-            ViewData["TipoPlatoId"] = new SelectList(_context.TiposPlatos, "Id", "Nombre", comidasEntitys.TipoPlatoId);
             return View(comidasEntitys);
         }
 
@@ -91,7 +86,7 @@ namespace RestauranteSoftware.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Precio,Descripcion,TipoPlatoId")] ComidasEntitys comidasEntitys)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ImagenUrl,Nombre,Precio,Descripcion")] ComidasEntitys comidasEntitys)
         {
             if (id != comidasEntitys.Id)
             {
@@ -118,7 +113,6 @@ namespace RestauranteSoftware.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoPlatoId"] = new SelectList(_context.TiposPlatos, "Id", "Nombre", comidasEntitys.TipoPlatoId);
             return View(comidasEntitys);
         }
 
@@ -131,7 +125,6 @@ namespace RestauranteSoftware.Controllers
             }
 
             var comidasEntitys = await _context.Comidas
-                .Include(c => c.TipoPlato)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (comidasEntitys == null)
             {

@@ -11,9 +11,7 @@ namespace RestauranteSoftware.Data
         {
         }
 
-        public DbSet<TiposPlatosEntitys> TiposPlatos { get; set; }
         public DbSet<ComidasEntitys> Comidas { get; set; }
-        public DbSet<TiposPedidosEntitys> TiposPedidos { get; set; }
         public DbSet<EstadosPedidosEntitys> EstadosPedidos { get; set; }
         public DbSet<PedidosEntitys> Pedidos { get; set; }
         public DbSet<DetallesPedidosEntitys> DetallesPedidos { get; set; }

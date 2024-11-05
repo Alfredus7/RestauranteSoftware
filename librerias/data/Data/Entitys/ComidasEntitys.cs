@@ -14,6 +14,8 @@ namespace Data.Data.Entitys
         [Key]
         [Column("id_comida")]
         public int Id { get; set; }
+        [Column("imagen_url")]
+        public string ImagenUrl { get; set; } = string.Empty;
 
         [Column("nombre")]
         public string Nombre { get; set; } = string.Empty;
@@ -23,11 +25,5 @@ namespace Data.Data.Entitys
 
         [Column("descripcion")]
         public string Descripcion { get; set; } = string.Empty;
-
-        [Column("tipo")]
-        public int TipoPlatoId { get; set; }
-
-        [ForeignKey("TipoPlatoId")]
-        public TiposPlatosEntitys? TipoPlato { get; set; }
     }
 }
