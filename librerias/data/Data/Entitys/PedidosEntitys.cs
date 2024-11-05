@@ -15,8 +15,8 @@ namespace Data.Data.Entitys
         [Column("id_pedido")]
         public int Id { get; set; }
 
-        [Column("tipo_pedido")]
-        public int TipoPedidoId { get; set; }
+        [Column("cantidad")]
+        public int Cantidad { get; set; }
 
         [Column("estado")]
         public int EstadoId { get; set; }
