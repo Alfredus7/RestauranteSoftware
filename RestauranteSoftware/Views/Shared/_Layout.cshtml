@@ -30,33 +30,45 @@
             </div>
         </nav>
     </header>
-
+   
     <div class="container-fluid h-100">
         <div class="row h-100">
-            <!-- Lateral Navigation Bar -->
+             @if(User.Identity.IsAuthenticated){
+                <!-- Lateral Navigation Bar -->
+                <nav class="col-md-2 d-none d-md-block sidebar">
+                    <div class="position-sticky">
+                        <ul class="nav flex-column p-3">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Comidas" asp-action="Index">Comidas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Pedidos" asp-action="Index">Pedidos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="EstadosPedidos" asp-action="Index">Estados de Pedidos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="DetallesPedidos" asp-action="Index">Detalles de Pedidos</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </nav>
+             }
+             else{
             <nav class="col-md-2 d-none d-md-block sidebar">
                 <div class="position-sticky">
                     <ul class="nav flex-column p-3">
-                         <li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Comidas" asp-action="Index">Comidas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Pedidos" asp-action="Index">Pedidos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="EstadosPedidos" asp-action="Index">Estados de Pedidos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="DetallesPedidos" asp-action="Index">Detalles de Pedidos</a>
-                        </li>
-
                     </ul>
                 </div>
             </nav>
-
+             }
             <!-- Main Content -->
             <main role="main" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
@@ -67,7 +79,7 @@
 
         </div>
     </div>
-
+    
     <footer class="footer mt-auto py-3">
         <div class="container m-3">
             <span class="text-muted">&copy; 2024 - UniDAD_3_P1 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></span>
