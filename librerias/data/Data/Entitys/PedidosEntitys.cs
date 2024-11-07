@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Data.Data.Entitys
 {
     [Table("pedidos")]
@@ -15,13 +16,17 @@ namespace Data.Data.Entitys
         [Column("id_pedido")]
         public int Id { get; set; }
 
-        [Column("cantidad")]
-        public int Cantidad { get; set; }
+        [Column("fecha")]
+        public DateTime Fecha { get; set; }
 
         [Column("estado")]
         public int EstadoId { get; set; }
 
+        [Column("total")]
+        public decimal TotalPedido { get; set; }
+
         [ForeignKey("EstadoId")]
-        public EstadosPedidosEntitys? EstadoPedido { get; set; }
+        public virtual EstadosPedidosEntitys? EstadoPedido { get; set; }
+
     }
 }

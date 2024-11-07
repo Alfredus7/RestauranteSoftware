@@ -10,22 +10,23 @@ using RestauranteSoftware.Data;
 
 namespace RestauranteSoftware.Controllers
 {
-    public class EstadosPedidosController : Controller
+    public class PedidosEntitysController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public EstadosPedidosController(ApplicationDbContext context)
+        public PedidosEntitysController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: EstadosPedidos
+        // GET: PedidosEntitys
         public async Task<IActionResult> Index()
         {
-            return View(await _context.EstadosPedidos.ToListAsync());
+            var applicationDbContext = _context.Pedidos.Include(p => p.EstadoPedido);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: EstadosPedidos/Details/5
+        // GET: PedidosEntitys/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +34,42 @@ namespace RestauranteSoftware.Controllers
                 return NotFound();
             }
 
-            var estadosPedidosEntitys = await _context.EstadosPedidos
+            var pedidosEntitys = await _context.Pedidos
+                .Include(p => p.EstadoPedido)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (estadosPedidosEntitys == null)
+            if (pedidosEntitys == null)
             {
                 return NotFound();
             }
 
-            return View(estadosPedidosEntitys);
+            return View(pedidosEntitys);
         }
 
-        // GET: EstadosPedidos/Create
+        // GET: PedidosEntitys/Create
         public IActionResult Create()
         {
+            ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre");
             return View();
         }
 
-        // POST: EstadosPedidos/Create
+        // POST: PedidosEntitys/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre")] EstadosPedidosEntitys estadosPedidosEntitys)
+        public async Task<IActionResult> Create([Bind("Id,Fecha,EstadoId,TotalPedido")] PedidosEntitys pedidosEntitys)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(estadosPedidosEntitys);
+                _context.Add(pedidosEntitys);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(estadosPedidosEntitys);
+            ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre", pedidosEntitys.EstadoId);
+            return View(pedidosEntitys);
         }
 
-        // GET: EstadosPedidos/Edit/5
+        // GET: PedidosEntitys/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +77,23 @@ namespace RestauranteSoftware.Controllers
                 return NotFound();
             }
 
-            var estadosPedidosEntitys = await _context.EstadosPedidos.FindAsync(id);
-            if (estadosPedidosEntitys == null)
+            var pedidosEntitys = await _context.Pedidos.FindAsync(id);
+            if (pedidosEntitys == null)
             {
                 return NotFound();
             }
-            return View(estadosPedidosEntitys);
+            ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre", pedidosEntitys.EstadoId);
+            return View(pedidosEntitys);
         }
 
-        // POST: EstadosPedidos/Edit/5
+        // POST: PedidosEntitys/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre")] EstadosPedidosEntitys estadosPedidosEntitys)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha,EstadoId,TotalPedido")] PedidosEntitys pedidosEntitys)
         {
-            if (id != estadosPedidosEntitys.Id)
+            if (id != pedidosEntitys.Id)
             {
                 return NotFound();
             }
@@ -97,12 +102,12 @@ namespace RestauranteSoftware.Controllers
             {
                 try
                 {
-                    _context.Update(estadosPedidosEntitys);
+                    _context.Update(pedidosEntitys);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EstadosPedidosEntitysExists(estadosPedidosEntitys.Id))
+                    if (!PedidosEntitysExists(pedidosEntitys.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +118,11 @@ namespace RestauranteSoftware.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(estadosPedidosEntitys);
+            ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre", pedidosEntitys.EstadoId);
+            return View(pedidosEntitys);
         }
 
-        // GET: EstadosPedidos/Delete/5
+        // GET: PedidosEntitys/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +130,35 @@ namespace RestauranteSoftware.Controllers
                 return NotFound();
             }
 
-            var estadosPedidosEntitys = await _context.EstadosPedidos
+            var pedidosEntitys = await _context.Pedidos
+                .Include(p => p.EstadoPedido)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (estadosPedidosEntitys == null)
+            if (pedidosEntitys == null)
             {
                 return NotFound();
             }
 
-            return View(estadosPedidosEntitys);
+            return View(pedidosEntitys);
         }
 
-        // POST: EstadosPedidos/Delete/5
+        // POST: PedidosEntitys/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var estadosPedidosEntitys = await _context.EstadosPedidos.FindAsync(id);
-            if (estadosPedidosEntitys != null)
+            var pedidosEntitys = await _context.Pedidos.FindAsync(id);
+            if (pedidosEntitys != null)
             {
-                _context.EstadosPedidos.Remove(estadosPedidosEntitys);
+                _context.Pedidos.Remove(pedidosEntitys);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EstadosPedidosEntitysExists(int id)
+        private bool PedidosEntitysExists(int id)
         {
-            return _context.EstadosPedidos.Any(e => e.Id == id);
+            return _context.Pedidos.Any(e => e.Id == id);
         }
     }
 }

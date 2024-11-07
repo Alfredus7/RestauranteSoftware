@@ -21,18 +21,13 @@ namespace Data.Data.Entitys
         [Column("comida")]
         public int ComidaId { get; set; }
 
-        [Column("precioTotal")]
-        public int precioTotal { get; set; }
-
-        [Column("fecha")]
-        public DateTime FechaOrden { get; set; }
-
-
+        [Column("cantidad")]
+        public int Cantidad { get; set; }
 
         [ForeignKey("PedidoId")]
-        public PedidosEntitys? Pedido { get; set; }
+        public virtual PedidosEntitys? Pedido { get; set; }
 
         [ForeignKey("ComidaId")]
-        public ComidasEntitys? Comida { get; set; }
+        public virtual ComidasEntitys? Comida { get; set; }
     }
 }
