@@ -8,13 +8,15 @@
 
 <h4>PedidosEntitys</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+<div class="row h-100">
+   
+    <div class="col-6 bg-light">
+       
+        <form asp-action="Create" class=" w-75">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Fecha" class="control-label"></label>
-                <input asp-for="Fecha" class="form-control" />
+                <input asp-for="Fecha" class="form-control" type="date" />
                 <span asp-validation-for="Fecha" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -29,13 +31,35 @@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
+           
         </form>
+
+
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+        <div class="bg-danger h-100 mt-4 w-100">
+
+            @*    LISTA CREO *@
+
+
+
+        </div>
+       
     </div>
+
+
+
+    <div class="col-6 bg-info">
+        @*    VISTA DE DETALLE *@
+
+
+    </div>
+
+   
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

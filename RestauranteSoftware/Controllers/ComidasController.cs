@@ -58,6 +58,7 @@ namespace RestauranteSoftware.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 _context.Add(comidasEntitys);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

@@ -49,7 +49,11 @@ namespace RestauranteSoftware.Controllers
         public IActionResult Create()
         {
             ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre");
-            return View();
+            var pedido = new PedidosEntitys
+            {
+                Fecha = DateTime.Now // Asigna la fecha actual al campo Fecha
+            };
+            return View(pedido);
         }
 
         // POST: PedidosEntitys/Create
@@ -61,6 +65,8 @@ namespace RestauranteSoftware.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Asigna la fecha actual al campo Fecha si es necesario
+                pedidosEntitys.Fecha = DateTime.Now;
                 _context.Add(pedidosEntitys);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
