@@ -83,13 +83,9 @@ namespace RestauranteSoftware.Controllers
                 // Asigna la fecha actual al campo Fecha si es necesario
                 pedidosEntitys.EstadoId = 1; //id de pendiente
                 pedidosEntitys.Fecha = DateTime.Now;
+                pedidosEntitys.TotalPedido = 0; //aquí colocar pedido
                 var list = listaComida.getIdCom();
                 var listCant = listaComida.getCant();
-                for (int i = 0; i < listaComida.getIdCom().Count; i++)
-                {
-                    int x = 1; //reemplazar x con comida.precio[i]
-                    pedidosEntitys.TotalPedido += x;
-                }
                 _context.Add(pedidosEntitys);
 
                 await _context.SaveChangesAsync();
