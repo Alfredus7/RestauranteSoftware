@@ -7,13 +7,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Data.Data.Entitys;
 using RestauranteSoftware.Data;
+using RestauranteSoftware.viewModels;
+using System.Collections.ObjectModel;
 
 namespace RestauranteSoftware.Controllers
 {
     public class PedidosEntitysController : Controller
     {
         private readonly ApplicationDbContext _context;
-
+        static List<int> ids = new List<int>();
         public PedidosEntitysController(ApplicationDbContext context)
         {
             _context = context;
@@ -46,14 +48,25 @@ namespace RestauranteSoftware.Controllers
         }
 
         // GET: PedidosEntitys/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(PedidosComidas pedidosComidas)
         {
+
             ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre");
-            var pedido = new PedidosEntitys
+            if (pedidosComidas.IdComidas == null)
             {
-                Fecha = DateTime.Now // Asigna la fecha actual al campo Fecha
-            };
-            return View(pedido);
+                ids = new List<int>();
+                pedidosComidas = new PedidosComidas();
+                var pedido = new PedidosEntitys
+                {
+                    Fecha = DateTime.Now // Asigna la fecha actual al campo Fecha
+                };
+                pedidosComidas.Pedido = pedido;
+                
+            }
+            var comidas = new List<ComidasEntitys>();
+            comidas = await _context.Comidas.ToListAsync();
+            pedidosComidas.Comidas = comidas;
+            return View(pedidosComidas);
         }
 
         // POST: PedidosEntitys/Create
@@ -165,6 +178,18 @@ namespace RestauranteSoftware.Controllers
         private bool PedidosEntitysExists(int id)
         {
             return _context.Pedidos.Any(e => e.Id == id);
+        }
+        public async Task<IActionResult> AddComidas(int id, [Bind("Id,Fecha,EstadoId,TotalPedido")] PedidosEntitys pedido)
+        {
+            var pedidosComidas = new PedidosComidas();
+            ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre");
+            pedidosComidas.Pedido = pedido;
+            var comidas = new List<ComidasEntitys>();
+            comidas = await _context.Comidas.ToListAsync();
+            pedidosComidas.Comidas = comidas;
+            ids.Add(id);
+            pedidosComidas.IdComidas = ids;
+            return RedirectToAction(nameof(Create), pedidosComidas);
         }
     }
 }
