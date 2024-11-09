@@ -5,6 +5,6 @@ namespace RestauranteSoftware.viewModels
     {
         public PedidosEntitys Pedido{ get; set; }
         public IList<ComidasEntitys>? Comidas { get; set; }
-        public IList<int>? IdComidas { get; set; }
+        public ListaComida ListaComida { get; set; }
     }
 }

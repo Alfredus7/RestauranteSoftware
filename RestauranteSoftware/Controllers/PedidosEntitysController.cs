@@ -15,7 +15,7 @@ namespace RestauranteSoftware.Controllers
     public class PedidosEntitysController : Controller
     {
         private readonly ApplicationDbContext _context;
-        static List<int> ids = new List<int>();
+        ListaComida listaComida = ListaComida.getListCom();
         public PedidosEntitysController(ApplicationDbContext context)
         {
             _context = context;
@@ -52,20 +52,20 @@ namespace RestauranteSoftware.Controllers
         {
 
             ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre");
-            if (pedidosComidas.IdComidas == null)
+            if (listaComida.getIdCom == null)
             {
-                ids = new List<int>();
+                listaComida.reiniciarVar();
                 pedidosComidas = new PedidosComidas();
                 var pedido = new PedidosEntitys
                 {
                     Fecha = DateTime.Now // Asigna la fecha actual al campo Fecha
                 };
                 pedidosComidas.Pedido = pedido;
-                
             }
             var comidas = new List<ComidasEntitys>();
             comidas = await _context.Comidas.ToListAsync();
             pedidosComidas.Comidas = comidas;
+            pedidosComidas.ListaComida = listaComida;
             return View(pedidosComidas);
         }
 
@@ -78,10 +78,24 @@ namespace RestauranteSoftware.Controllers
         {
             if (ModelState.IsValid)
             {
+                DetallesPedidosEntitys det= new DetallesPedidosEntitys();
                 // Asigna la fecha actual al campo Fecha si es necesario
                 pedidosEntitys.Fecha = DateTime.Now;
                 _context.Add(pedidosEntitys);
                 await _context.SaveChangesAsync();
+                foreach (var comida in listaComida.getIdCom())
+                {
+                    det.PedidoId = pedidosEntitys.Id;
+                    det.ComidaId = comida;
+                    det.Cantidad = 1;
+
+
+
+                    _context.Add(det);
+                    await _context.SaveChangesAsync();
+
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre", pedidosEntitys.EstadoId);
@@ -187,8 +201,7 @@ namespace RestauranteSoftware.Controllers
             var comidas = new List<ComidasEntitys>();
             comidas = await _context.Comidas.ToListAsync();
             pedidosComidas.Comidas = comidas;
-            ids.Add(id);
-            pedidosComidas.IdComidas = ids;
+            listaComida.addIdCom(id);
             return RedirectToAction(nameof(Create), pedidosComidas);
         }
     }
