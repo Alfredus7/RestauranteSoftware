@@ -10,6 +10,7 @@ namespace Data.Data.Entitys
     {
         private static List<int> IdCom = new List<int>();
         private static List<int> cant = new List<int>();
+        private static List<string> nombres = new List<string>();
         private static ListaComida instancia;
 
         private ListaComida() { }  
@@ -26,6 +27,10 @@ namespace Data.Data.Entitys
         {
             return IdCom;
         }
+        public List<string> getNom()
+        {
+            return nombres;
+        }
         public List<int> getCant()
         {
             return cant;
@@ -38,10 +43,15 @@ namespace Data.Data.Entitys
         {
             cant.Add(num);
         }
+        public void addNom(string nom)
+        {
+            nombres.Add(nom);
+        }
         public void reiniciarVar() 
         {
             IdCom = new List<int>();
             cant = new List<int>();
+            nombres = new List<string>();
 
         }
 

@@ -10,6 +10,7 @@ using RestauranteSoftware.Data;
 using RestauranteSoftware.viewModels;
 using System.Collections.ObjectModel;
 
+
 namespace RestauranteSoftware.Controllers
 {
     public class PedidosEntitysController : Controller
@@ -74,7 +75,7 @@ namespace RestauranteSoftware.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Fecha,EstadoId,TotalPedido")] PedidosEntitys pedidosEntitys)
+        public async Task<IActionResult> Create([Bind("Id,Fecha,EstadoId,TotalPedido")] PedidosEntitys pedidosEntitys )
         {
             if (ModelState.IsValid)
             {
@@ -82,17 +83,25 @@ namespace RestauranteSoftware.Controllers
                 // Asigna la fecha actual al campo Fecha si es necesario
                 pedidosEntitys.Fecha = DateTime.Now;
                 _context.Add(pedidosEntitys);
+
                 await _context.SaveChangesAsync();
-                foreach (var comida in listaComida.getIdCom())
+                var list = listaComida.getIdCom();
+                var listCant = listaComida.getCant();
+                for (int i = 0; i < listaComida.getIdCom().Count; i++)
                 {
+
+                
+                
                     det.PedidoId = pedidosEntitys.Id;
-                    det.ComidaId = comida;
-                    det.Cantidad = 1;
+                    det.ComidaId = list[i];
+                    det.Cantidad = listCant[i];
 
 
 
-                    _context.Add(det);
+                    _context.DetallesPedidos.Add(det);
                     await _context.SaveChangesAsync();
+
+                    listaComida.reiniciarVar();
 
                 }
 
@@ -193,14 +202,18 @@ namespace RestauranteSoftware.Controllers
         {
             return _context.Pedidos.Any(e => e.Id == id);
         }
-        public async Task<IActionResult> AddComidas(int id, [Bind("Id,Fecha,EstadoId,TotalPedido")] PedidosEntitys pedido)
+        public async Task<IActionResult> AddComidas(int id, [Bind("Id,Fecha,EstadoId,TotalPedido")] PedidosEntitys pedido, int quantity, string nom)
         {
             var pedidosComidas = new PedidosComidas();
             ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre");
             pedidosComidas.Pedido = pedido;
             var comidas = new List<ComidasEntitys>();
+            
             comidas = await _context.Comidas.ToListAsync();
             pedidosComidas.Comidas = comidas;
+
+            listaComida.addNom(nom);
+            listaComida.addCant(quantity);
             listaComida.addIdCom(id);
             return RedirectToAction(nameof(Create), pedidosComidas);
         }

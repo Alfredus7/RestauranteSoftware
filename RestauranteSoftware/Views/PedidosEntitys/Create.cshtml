@@ -42,27 +42,39 @@
             @*    LISTA CREO *@
             @if (Model.ListaComida.getIdCom() != null)
             {
-                @foreach (var item in Model.ListaComida.getIdCom())
+                var list = Model.ListaComida.getIdCom();
+                var listCant = Model.ListaComida.getCant();
+                var listNom = Model.ListaComida.getNom();
+
+                @for (int i = 0; i < list.Count; i++)
                 {
-                    <p>@item</p>    <input asp-for="ListaComida.getCant()" type="number" min="1"></input>
+                    <div style="display: flex; align-items: center; gap: 10px; white-space: nowrap;">
+                        <p>@list[i]</p>
+                        <p>@listNom[i]</p>
+                        <input type="number" value="@listCant[i]" readonly />
+                    </div>
                 }
             }
         </div>
     </div>
     <div class="col-6 bg-info">
         @*    VISTA DE DETALLE *@
-        @foreach (var item in Model.Comidas)
+        @for (int i = 0; i < Model.Comidas.Count; i++)
         {
             <div class="col-md-3">
                 <div class="card mb-3 shadow-sm">
-                    <img src="@item.ImagenUrl" class="card-img-top" alt="Imagen de @item.Nombre">
+                    <img src="@Model.Comidas[i].ImagenUrl" class="card-img-top" alt="Imagen de @Model.Comidas[i].Nombre">
                     <div class="card-body">
-                        <h5 class="card-title">@item.Nombre</h5>
-                        <p class="card-text">@item.Descripcion</p>
-                        <p class="card-text"><strong>Precio:</strong> Bs @item.Precio</p>
+                        <h5 class="card-title" >@Model.Comidas[i].Nombre</h5>
+                        <p class="card-text"><strong>Precio:</strong> Bs @Model.Comidas[i].Precio</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <a class="btn btn-sm btn-outline-secondary" asp-action="AddComidas" asp-route-id="@item.Id" >@item.Id</a>
+                            <form asp-action="AddComidas" method="post" asp-route-id="@Model.Comidas[i].Id">
+                                    <input id="quantityInput_@i" name="quantity" type="number" min="1" class="btn btn-sm btn-outline-secondary" value="1" />
+                                    <button type="submit">@Model.Comidas[i].Id</button>
+                                    <input type="hidden" name="nom" value="@Model.Comidas[i].Nombre" />
+
+                            </form>
                             </div>
                         </div>
                     </div>
