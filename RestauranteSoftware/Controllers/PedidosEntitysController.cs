@@ -53,7 +53,7 @@ namespace RestauranteSoftware.Controllers
         {
 
             ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre");
-            if (listaComida.getIdCom == null)
+            if (pedidosComidas.Comidas == null)
             {
                 listaComida.reiniciarVar();
                 pedidosComidas = new PedidosComidas();
@@ -81,22 +81,24 @@ namespace RestauranteSoftware.Controllers
             {
                 DetallesPedidosEntitys det= new DetallesPedidosEntitys();
                 // Asigna la fecha actual al campo Fecha si es necesario
+                pedidosEntitys.EstadoId = 1; //id de pendiente
                 pedidosEntitys.Fecha = DateTime.Now;
-                _context.Add(pedidosEntitys);
-
-                await _context.SaveChangesAsync();
                 var list = listaComida.getIdCom();
                 var listCant = listaComida.getCant();
                 for (int i = 0; i < listaComida.getIdCom().Count; i++)
                 {
+                    int x = 1; //reemplazar x con comida.precio[i]
+                    pedidosEntitys.TotalPedido += x;
+                }
+                _context.Add(pedidosEntitys);
 
-                
+                await _context.SaveChangesAsync();
+                for (int i = 0; i < listaComida.getIdCom().Count; i++)
+                {
                 
                     det.PedidoId = pedidosEntitys.Id;
                     det.ComidaId = list[i];
                     det.Cantidad = listCant[i];
-
-
 
                     _context.DetallesPedidos.Add(det);
                     await _context.SaveChangesAsync();
