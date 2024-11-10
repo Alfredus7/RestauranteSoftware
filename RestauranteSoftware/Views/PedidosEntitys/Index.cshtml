@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Data.Data.Entitys.PedidosEntitys>
+﻿@model RestauranteSoftware.viewModels.PedidosViews
 
 @{
     ViewData["Title"] = "Index";
@@ -9,39 +9,59 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalPedido)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EstadoPedido)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalPedido)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EstadoPedido.Nombre)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+
+@foreach (var item in Model.pedidos)
+{
+    <div class="bordered-div">
+        <div class="container mt-5">
+            <h2 class="text-center">Detalles de Compra</h2>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <h5>Numero Pedido:@item.Id </h5>
+                </div>
+                <div class="col-md-3">
+                    <h5>Mesa: 0</h5>
+                </div>
+                <div class="col-md-3">
+                    <h5>Estado: Pendiente</h5>
+                </div>
+                <div class="col-md-3 text-end">
+                    <h5>Fecha: @item.Fecha.ToString("dd/MM/yyyy")</h5>
+                </div>
+            </div>
+
+            <hr />
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                    
+                        <th>Comida</th>
+                        <th>Cantidad</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var items in Model.detallesPedidos)
+                    {
+                        @if (items.PedidoId == item.Id)
+                        {
+                            <tr>
+                       
+                                <td>@items.ComidaId</td>
+                                <td>@items.Cantidad</td>
+                               
+                            </tr>
+                        }
+
+                    }
+                </tbody>
+            </table>
+
+            <div class="text-end">
+                <h5>Total: @item.TotalPedido</h5>
+            </div>
+        </div>
+    </div>
 }
-    </tbody>
-</table>
