@@ -82,8 +82,8 @@
         <div class="row g-4">
             @for (int i = 0; i < Model.Comidas.Count; i++)
             {
-                <div class="col-md-6">
-                    <div class="card h-100 shadow-sm">
+                <div class="col-md-6 ">
+                    <div class="card h-100 shadow-sm mb-3">
                         <img src="@Model.Comidas[i].ImagenUrl" class="card-img-top" alt="Imagen de @Model.Comidas[i].Nombre" style="height: 10em">
                         <div class="card-body">
                             <h5 class="card-title">@Model.Comidas[i].Nombre</h5>

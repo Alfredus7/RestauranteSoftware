@@ -15,15 +15,11 @@ a, .field-validation-error, span, .nav-link {
 }
 
 /* Layout Components */
-header{
-    background-color: #ffdd55; /* Amarillo claro */
-    opacity: 0.7;
+header, footer {
+    background-color: rgba(255, 242, 172, 0.692); /* Amarillo brillante semitransparente */
 }
 
-footer {
-    background-color: #ffdd55; /* Amarillo claro */
-    opacity: 0.6;
-}
+
 
 main {
     background-color: rgba(255, 236, 128, 0.5); /* Amarillo brillante semitransparente */
@@ -71,11 +67,11 @@ form {
         cursor: pointer;
     }
 
-        .form-control:focus, .form-select:focus {
-            background-color: #ffd966; /* Amarillo intermedio */
-            outline: none;
-            border: 2px solid #ffcc33; /* Amarillo más oscuro */
-        }
+    .form-control:focus, .form-select:focus {
+        background-color: #ffd966; /* Amarillo intermedio */
+        outline: none;
+        border: 2px solid #ffcc33; /* Amarillo más oscuro */
+    }
 
 /* Buttons */
 .btn, .btn-primary {
@@ -83,12 +79,14 @@ form {
     border-radius: 5px;
     font-size: 16px;
     margin-top: 2%;
+    color: #007acc; /* Azul brillante */
 }
 
     .btn:hover, .btn:focus, .btn:after {
         background-color: #ffe991; /* Amarillo intermedio */
         border-radius: 5px;
         cursor: pointer;
+        color: #007acc; /* Azul brillante */
     }
 
 /* Table */
@@ -103,14 +101,14 @@ thead tr {
     padding: 8px;
     text-align: left;
     background-color: #fff1a1; /* Fondo del encabezado amarillo brillante */
-    color: rgb(31, 0, 167);
+    color: #007acc; /* Azul brillante */
 }
 
 tbody tr {
-    color: rgb(31, 0, 167);
+    color: #0061a1; /* Azul brillante */
     background-color: #ffd52e; /* Fondo amarillo intermedio */
 }
 
     tbody tr:hover {
-        background-color: #b4bcff; /* Fondo amarillo más oscuro al pasar el mouse */
+        color: #0099ff; /* Azul brillante */
     }
