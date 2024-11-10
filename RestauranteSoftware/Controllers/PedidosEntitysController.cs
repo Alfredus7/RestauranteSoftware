@@ -80,7 +80,7 @@ namespace RestauranteSoftware.Controllers
         {
             if (ModelState.IsValid)
             {
-                DetallesPedidosEntitys det= new DetallesPedidosEntitys();
+               
                 // Asigna la fecha actual al campo Fecha si es necesario
                 pedidosEntitys.EstadoId = 1; //id de pendiente
                 pedidosEntitys.Fecha = DateTime.Now;
@@ -92,7 +92,7 @@ namespace RestauranteSoftware.Controllers
                 await _context.SaveChangesAsync();
                 for (int i = 0; i < listaComida.getIdCom().Count; i++)
                 {
-                
+                    DetallesPedidosEntitys det = new DetallesPedidosEntitys();
                     det.PedidoId = pedidosEntitys.Id;
                     det.ComidaId = list[i];
                     det.Cantidad = listCant[i];
@@ -100,9 +100,9 @@ namespace RestauranteSoftware.Controllers
                     _context.DetallesPedidos.Add(det);
                     await _context.SaveChangesAsync();
 
-                    listaComida.reiniciarVar();
-
+                   
                 }
+                listaComida.reiniciarVar();
 
                 return RedirectToAction(nameof(Index));
             }
