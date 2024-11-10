@@ -10,9 +10,8 @@
     <link rel="stylesheet" href="~/Unidad3P1.styles.css" asp-append-version="true" />
 </head>
 
-<body class="h-100 bg-light">
+<body class="d-flex flex-column min-vh-100 bg-light">
     <header>
-        <!-- Header -->
         <nav class="navbar navbar-expand-sm navbar-light">
             <div class="container-fluid">
                 <a class="navbar-brand text-dark" asp-area="" asp-controller="Home" asp-action="Index">Cafeteria</a>
@@ -30,11 +29,11 @@
             </div>
         </nav>
     </header>
-   
-    <div class="container-fluid h-100">
+
+    <div class="container-fluid flex-grow-1">
         <div class="row h-100">
-             @if(User.Identity.IsAuthenticated){
-                <!-- Lateral Navigation Bar -->
+            @if (User.Identity.IsAuthenticated)
+            {
                 <nav class="col-md-2 d-none d-md-block sidebar">
                     <div class="position-sticky">
                         <ul class="nav flex-column p-3">
@@ -50,33 +49,32 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="EstadosPedidosEntitys" asp-action="Index">Estados de Pedidos</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="DetallesPedidos" asp-action="Index">Detalles de Pedidos</a>
+                            </li>
                         </ul>
                     </div>
                 </nav>
-             }
-             else{
-            <nav class="col-md-2 d-none d-md-block sidebar">
-                <div class="position-sticky">
-                    <ul class="nav flex-column p-3">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-             }
-            <!-- Main Content -->
+            }
+            else
+            {
+                <nav class="col-md-2 d-none d-md-block sidebar">
+                    <div class="position-sticky">
+                        <ul class="nav flex-column p-3">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            }
             <main role="main" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-
-                <div role="main" class=" mt-3">
-                    @RenderBody()
-                </div>
+                @RenderBody()
             </main>
-
         </div>
     </div>
-    
-    <footer class="footer mt-auto py-3">
+
+    <footer class="footer mt-auto py-3 bg-light">
         <div class="container m-3">
             <span class="text-muted">&copy; 2024 - UniDAD_3_P1 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></span>
         </div>
@@ -89,5 +87,6 @@
 </body>
 
 </html>
+
 
 
