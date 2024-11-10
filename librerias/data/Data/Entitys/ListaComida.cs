@@ -8,9 +8,9 @@ namespace Data.Data.Entitys
 {
     public class ListaComida
     {
-        private static List<int> IdCom = new List<int>();
-        private static List<int> cant = new List<int>();
-        private static List<string> nombres = new List<string>();
+        private static List<int> LIdCom = new List<int>();
+        private static List<int> Lcant = new List<int>();
+        private static List<string> Lnombres = new List<string>();
         private static ListaComida instancia;
 
         private ListaComida() { }  
@@ -25,34 +25,55 @@ namespace Data.Data.Entitys
         }
         public List<int> getIdCom() 
         {
-            return IdCom;
+            return LIdCom;
         }
         public List<string> getNom()
         {
-            return nombres;
+            return Lnombres;
         }
         public List<int> getCant()
         {
-            return cant;
+            return Lcant;
         }
         public void addIdCom(int Id)
         {
-            IdCom.Add(Id);
+            LIdCom.Add(Id);
         }
         public void addCant(int num)
         {
-            cant.Add(num);
+            Lcant.Add(num);
         }
         public void addNom(string nom)
         {
-            nombres.Add(nom);
+            Lnombres.Add(nom);
         }
         public void reiniciarVar() 
         {
-            IdCom = new List<int>();
-            cant = new List<int>();
-            nombres = new List<string>();
+            LIdCom = new List<int>();
+            Lcant = new List<int>();
+            Lnombres = new List<string>();
 
+        }
+        public void eliminarComida(int valor)
+        {
+            LIdCom.RemoveAt(valor);  
+            Lcant.RemoveAt(valor);
+            Lnombres.RemoveAt(valor);
+        }
+
+        public void reacomodar()
+        {
+            for (int j = 0; j < LIdCom.Count(); j++)
+            {
+                if (LIdCom[j] == null && j != LIdCom.Count())
+                {
+                    for (int i = j+1; i < LIdCom.Count(); i++)
+                    {
+                        LIdCom[j] = LIdCom[i];
+
+                    }
+                }
+            }
         }
 
     }

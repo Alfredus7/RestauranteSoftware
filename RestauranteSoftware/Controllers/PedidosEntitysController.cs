@@ -56,13 +56,14 @@ namespace RestauranteSoftware.Controllers
             if (pedidosComidas.Comidas == null)
             {
                 listaComida.reiniciarVar();
-                pedidosComidas = new PedidosComidas();
-                var pedido = new PedidosEntitys
-                {
-                    Fecha = DateTime.Now // Asigna la fecha actual al campo Fecha
-                };
-                pedidosComidas.Pedido = pedido;
+                
             }
+            pedidosComidas = new PedidosComidas();
+            var pedido = new PedidosEntitys
+            {
+                Fecha = DateTime.Now // Asigna la fecha actual al campo Fecha
+            };
+            pedidosComidas.Pedido = pedido;
             var comidas = new List<ComidasEntitys>();
             comidas = await _context.Comidas.ToListAsync();
             pedidosComidas.Comidas = comidas;

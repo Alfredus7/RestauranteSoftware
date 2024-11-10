@@ -50,6 +50,7 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
+                                <th scope="col">Numero</th>
                                 <th scope="col">Nombre de la Comida</th>
                                 <th scope="col">ID</th>
                                 <th scope="col">Cantidad</th>
@@ -58,7 +59,9 @@
                         <tbody>
                             @for (int i = 0; i < list.Count; i++)
                             {
+                                var indice = i + 1;
                                 <tr>
+                                    <td>@indice</td>
                                     <td>@listNom[i]</td>
                                     <td>@list[i]</td>
                                     <td>
