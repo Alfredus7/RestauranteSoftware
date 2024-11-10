@@ -14,26 +14,29 @@
 {
     <div class="bordered-div">
         <div class="container mt-5">
-            <h2 class="text-center">Detalles de Compra</h2>
-
-            <div class="row">
-                <div class="col-md-3">
-                    <h5>Numero Pedido:@item.Id </h5>
-                </div>
-                <div class="col-md-3">
-                    <h5>Mesa: 0</h5>
-                </div>
-                <div class="col-md-3">
-                    <h5>Estado: Pendiente</h5>
-                </div>
-                <div class="col-md-3 text-end">
-                    <h5>Fecha: @item.Fecha.ToString("dd/MM/yyyy")</h5>
-                </div>
-            </div>
+           
 
             <hr />
 
             <table class="table table-striped">
+                <div class="Theader">
+                    <h2 class="text-center">Detalles de Compra</h2>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h5>Numero Pedido:@item.Id </h5>
+                        </div>
+                        <div class="col-md-3">
+                            <h5>Mesa: 0</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <h5>Estado: Pendiente</h5>
+                        </div>
+                        <div class="col-md-3 text-end">
+                            <h5>Fecha: @item.Fecha.ToString("dd/MM/yyyy")</h5>
+                        </div>
+                    </div>
+                </div>
                 <thead>
                     <tr>
                     

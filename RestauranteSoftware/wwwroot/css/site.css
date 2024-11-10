@@ -96,11 +96,18 @@ table {
     background-color: #fff2cc; /* Fondo amarillo claro */
 }
 
-thead tr {
-    background-color: rgb(255, 224, 133); /* Bordes amarillos */
+.Theader {
+    background-color: rgb(255, 241, 199); /* Bordes amarillos */
     padding: 8px;
     text-align: left;
+    color: #007acc; /* Azul brillante */
+}
+
+
+thead tr {
     background-color: #fff1a1; /* Fondo del encabezado amarillo brillante */
+    padding: 8px;
+    text-align: left;
     color: #007acc; /* Azul brillante */
 }
 
