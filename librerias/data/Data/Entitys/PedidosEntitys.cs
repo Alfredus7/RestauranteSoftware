@@ -23,7 +23,7 @@ namespace Data.Data.Entitys
         public int EstadoId { get; set; }
 
         [Column("total")]
-        public decimal TotalPedido { get; set; }
+        public int TotalPedido { get; set; }
 
         [ForeignKey("EstadoId")]
         public virtual EstadosPedidosEntitys? EstadoPedido { get; set; }

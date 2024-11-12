@@ -21,7 +21,7 @@ namespace Data.Data.Entitys
         public string Nombre { get; set; } = string.Empty;
 
         [Column("precio")]
-        public decimal Precio { get; set; }
+        public int Precio { get; set; }
 
         [Column("descripcion")]
         public string Descripcion { get; set; } = string.Empty;
