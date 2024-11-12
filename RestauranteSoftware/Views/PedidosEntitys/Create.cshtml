@@ -46,32 +46,29 @@
                     <p class="text-center mb-0">No hay comidas seleccionadas.</p>
                 }
             </div>
-            <form asp-action="Create" class="needs-validation" asp-route-Mmodel="Model.IdComidas" novalidate>
-                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-                <div class="form-group mb-3">
+            <form class="row" asp-action="Create" class="needs-validation" asp-route-Mmodel="Model.IdComidas" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <div class="col-auto">
                     <label asp-for="Pedido.Fecha" class="form-label"></label>
                     <input asp-for="Pedido.Fecha" class="form-control" type="date" required />
                     <span asp-validation-for="Pedido.Fecha" class="text-danger"></span>
                 </div>
-
-                <div class="form-group mb-3">
+                <div class="col-auto">
                     <label asp-for="Pedido.EstadoId" class="form-label"></label>
                     <select asp-for="Pedido.EstadoId" class="form-select" asp-items="ViewBag.EstadoId" required></select>
                 </div>
-
-                <div class="form-group mb-4">
+                <div class="col-auto">
                     <label asp-for="Pedido.TotalPedido" class="form-label"></label>
                     <input asp-for="Pedido.TotalPedido" class="form-control" />
                     <span asp-validation-for="Pedido.TotalPedido" class="text-danger"></span>
                 </div>
-
-                <div class="d-flex justify-content-between">
+                <div class="col-auto">
+                    <br />
                     <input type="submit" value="Crear" class="btn btn-primary" />
-                    <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
                 </div>
             </form>
-
+            <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
         </div>
     </div>
 
