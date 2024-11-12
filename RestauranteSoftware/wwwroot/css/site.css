@@ -16,9 +16,8 @@ a, .field-validation-error, span, .nav-link {
 
 /* Layout Components */
 header, footer {
-    background-color: rgba(255, 242, 172, 0.692); /* Amarillo brillante semitransparente */
+    background-color: #ffda6ace; /* Amarillo brillante */
 }
-
 
 
 main {
@@ -33,7 +32,7 @@ main {
 
 /* Card */
 .card {
-    height: 24em;
+  
     border: none;
     border-radius: 10%;
     background-color: #ffd700; /* Amarillo brillante */
@@ -43,7 +42,7 @@ main {
 .card-img-top {
     border-radius: 10%;
     display: block;
-    height: 24em;
+    height: 20em;
     width: 100%;
     object-fit: cover;
 }
@@ -53,6 +52,7 @@ form {
     background-color: #ffd700; /* Amarillo brillante */
     padding: 2%;
     border-radius: 8px;
+    color: #007acc; /* Azul brillante */
 }
 
 .form-control, .form-select {
@@ -60,15 +60,18 @@ form {
     border: 2px solid #ffd700; /* Amarillo brillante */
     border-radius: 5px;
     font-size: 16px;
+    color: #007acc; /* Azul brillante */
 }
 
     .form-control:hover, .form-select:hover {
         background-color: #ffdd55; /* Amarillo claro */
         cursor: pointer;
+        color: #0099ff; /* Azul brillante */
     }
 
     .form-control:focus, .form-select:focus {
         background-color: #ffd966; /* Amarillo intermedio */
+        color: #007acc; /* Azul brillante */
         outline: none;
         border: 2px solid #ffcc33; /* Amarillo más oscuro */
     }
