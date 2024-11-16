@@ -206,7 +206,7 @@ namespace RestauranteSoftware.Controllers
         {
             return _context.Pedidos.Any(e => e.Id == id);
         }
-        public async Task<IActionResult> AddComidas(int id, [Bind("Id,Fecha,EstadoId,TotalPedido")] PedidosEntitys pedido, int quantity, string nom)
+        public async Task<IActionResult> AddComidas(int id, [Bind("Id,Fecha,EstadoId,TotalPedido")] PedidosEntitys pedido, int quantity, int precio, string nom)
         {
             var pedidosComidas = new PedidosComidas();
             ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre");
@@ -218,6 +218,7 @@ namespace RestauranteSoftware.Controllers
 
             listaComida.addNom(nom);
             listaComida.addCant(quantity);
+            listaComida.addTotal(precio * quantity);
             listaComida.addIdCom(id);
             return RedirectToAction(nameof(Create), pedidosComidas);
         }

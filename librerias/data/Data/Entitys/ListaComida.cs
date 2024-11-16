@@ -10,6 +10,7 @@ namespace Data.Data.Entitys
     {
         private static List<int> LIdCom = new List<int>();
         private static List<int> Lcant = new List<int>();
+        private static List<int> Ltotal = new List<int>();
         private static List<string> Lnombres = new List<string>();
         private static ListaComida instancia;
 
@@ -35,6 +36,10 @@ namespace Data.Data.Entitys
         {
             return Lcant;
         }
+        public List<int> getTotal()
+        {
+            return Ltotal;
+        }
         public void addIdCom(int Id)
         {
             LIdCom.Add(Id);
@@ -42,6 +47,10 @@ namespace Data.Data.Entitys
         public void addCant(int num)
         {
             Lcant.Add(num);
+        }
+        public void addTotal(int num)
+        {
+            Ltotal.Add(num);
         }
         public void addNom(string nom)
         {
@@ -51,6 +60,7 @@ namespace Data.Data.Entitys
         {
             LIdCom = new List<int>();
             Lcant = new List<int>();
+            Ltotal = new List<int>();
             Lnombres = new List<string>();
 
         }
@@ -58,6 +68,7 @@ namespace Data.Data.Entitys
         {
             LIdCom.RemoveAt(valor);  
             Lcant.RemoveAt(valor);
+            Ltotal.RemoveAt(valor);
             Lnombres.RemoveAt(valor);
         }
 
