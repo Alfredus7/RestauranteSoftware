@@ -81,7 +81,7 @@ namespace RestauranteSoftware.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Fecha,EstadoId,TotalPedido")] PedidosEntitys pedidosEntitys )
+        public async Task<IActionResult> Create([Bind("Id,Fecha,EstadoId,TotalPedido")] PedidosEntitys pedidosEntitys, int Totalito)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +89,7 @@ namespace RestauranteSoftware.Controllers
                 // Asigna la fecha actual al campo Fecha si es necesario
                 pedidosEntitys.EstadoId = 1; //id de pendiente
                 pedidosEntitys.Fecha = DateTime.Now;
-                pedidosEntitys.TotalPedido = 0; //aquí colocar pedido
+                pedidosEntitys.TotalPedido = Totalito; //aquí colocar pedido
                 var list = listaComida.getIdCom();
                 var listCant = listaComida.getCant();
                 _context.Add(pedidosEntitys);
