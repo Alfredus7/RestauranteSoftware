@@ -89,7 +89,7 @@ namespace Data.Data.Entitys
         public int buscar(int id)
         {
             int Ri=-1;
-            for (int i = 0 + 1; i < LIdCom.Count(); i++)
+            for (int i = 0; i < LIdCom.Count(); i++)
             {
                 if(LIdCom[i] == id)
                 {
