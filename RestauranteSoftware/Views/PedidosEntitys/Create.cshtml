@@ -51,7 +51,7 @@
                                         <input type="number" value="@listTotal[i]" class="form-control precioTotal" style="width: 100px;" readonly />
                                     </td>
                                     <td>
-                                        <form asp-action="DeleteComidas" method="post" asp-route-id="i">
+                                        <form asp-action="DeleteComidas" method="post" asp-route-id="@list[i]">
                                             <button type="submit">Eliminar</button>
                                         </form>
                                     </td>

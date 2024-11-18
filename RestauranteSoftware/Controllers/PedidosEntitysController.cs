@@ -233,7 +233,7 @@ namespace RestauranteSoftware.Controllers
             
             return RedirectToAction(nameof(Create), pedidosComidas);
         }
-        public async Task<IActionResult> DeleteComidas(int i, [Bind("Id,Fecha,EstadoId,TotalPedido")] PedidosEntitys pedido, int quantity, int precio, string nom)
+        public async Task<IActionResult> DeleteComidas(int id, [Bind("Id,Fecha,EstadoId,TotalPedido")] PedidosEntitys pedido, int quantity, int precio, string nom)
         {
             var pedidosComidas = new PedidosComidas();
             ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre");
@@ -243,6 +243,7 @@ namespace RestauranteSoftware.Controllers
             comidas = await _context.Comidas.ToListAsync();
             pedidosComidas.Comidas = comidas;
 
+            int i = listaComida.buscar(id);
             listaComida.eliminarComida(i);
             return RedirectToAction(nameof(Create), pedidosComidas);
         }
