@@ -222,5 +222,18 @@ namespace RestauranteSoftware.Controllers
             listaComida.addIdCom(id);
             return RedirectToAction(nameof(Create), pedidosComidas);
         }
+        public async Task<IActionResult> DeleteComidas(int i, [Bind("Id,Fecha,EstadoId,TotalPedido")] PedidosEntitys pedido, int quantity, int precio, string nom)
+        {
+            var pedidosComidas = new PedidosComidas();
+            ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre");
+            pedidosComidas.Pedido = pedido;
+            var comidas = new List<ComidasEntitys>();
+
+            comidas = await _context.Comidas.ToListAsync();
+            pedidosComidas.Comidas = comidas;
+
+            listaComida.eliminarComida(i);
+            return RedirectToAction(nameof(Create), pedidosComidas);
+        }
     }
 }
