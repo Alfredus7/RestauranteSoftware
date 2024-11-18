@@ -28,7 +28,7 @@ namespace RestauranteSoftware.Controllers
             var applicationDbContext = _context.Pedidos.Include(p => p.EstadoPedido);
             PedidosViews pedidoViewModel = new PedidosViews();
             pedidoViewModel.pedidos = await applicationDbContext.ToListAsync();
-            pedidoViewModel.detallesPedidos = await _context.DetallesPedidos.ToListAsync();
+            pedidoViewModel.detallesPedidos = await _context.DetallesPedidos.Include(x => x.Comida).ToListAsync();
 
 
             return View(pedidoViewModel);
