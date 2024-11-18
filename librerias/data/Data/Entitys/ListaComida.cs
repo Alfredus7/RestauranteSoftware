@@ -86,6 +86,25 @@ namespace Data.Data.Entitys
                 }
             }
         }
-
+        public int buscar(int id)
+        {
+            int Ri=-1;
+            for (int i = 0 + 1; i < LIdCom.Count(); i++)
+            {
+                if(LIdCom[i] == id)
+                {
+                    Ri = i;
+                }
+            }
+            return Ri;
+        }
+        public void sumarCant(int num, int i)
+        {
+            Lcant[i] = num;
+        }
+        public void sumarTotal(int num, int i)
+        {
+            Ltotal[i] = num;
+        }
     }
 }

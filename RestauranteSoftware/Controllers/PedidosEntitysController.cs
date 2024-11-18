@@ -216,10 +216,21 @@ namespace RestauranteSoftware.Controllers
             comidas = await _context.Comidas.ToListAsync();
             pedidosComidas.Comidas = comidas;
 
-            listaComida.addNom(nom);
-            listaComida.addCant(quantity);
-            listaComida.addTotal(precio * quantity);
-            listaComida.addIdCom(id);
+            int i = listaComida.buscar(id);
+
+            if (i == -1)
+            {
+                listaComida.addNom(nom);
+                listaComida.addCant(quantity);
+                listaComida.addTotal(precio * quantity);
+                listaComida.addIdCom(id);
+            }
+            else
+            {
+                listaComida.sumarCant(quantity, i);
+                listaComida.sumarTotal(precio * quantity, i);
+            }
+            
             return RedirectToAction(nameof(Create), pedidosComidas);
         }
         public async Task<IActionResult> DeleteComidas(int i, [Bind("Id,Fecha,EstadoId,TotalPedido")] PedidosEntitys pedido, int quantity, int precio, string nom)
