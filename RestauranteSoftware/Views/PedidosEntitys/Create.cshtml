@@ -19,9 +19,11 @@
                         <tr>
                             <th scope="col">Numero</th>
                             <th scope="col">Nombre de la Comida</th>
-                            <th scope="col">ID</th>
+                           
                             <th scope="col">Cantidad</th>
                             <th scope="col">Precio Total</th>
+                            <th scope="col" class="opacity-0">Eliminar </th>
+                          @*   <th scope="col" class="opacity-0">ID</th> *@
                         </tr>
                     </thead>
                     <tbody>
@@ -29,19 +31,19 @@
                         @if (Model.ListaComida.getIdCom() != null && Model.ListaComida.getIdCom().Count > 0)
                         {
                             // Se obtienen las listas de IDs, cantidades, totales y nombres de las comidas
-                            var list = Model.ListaComida.getIdCom();
+                            var listID = Model.ListaComida.getIdCom();
                             var listCant = Model.ListaComida.getCant();
                             var listTotal = Model.ListaComida.getTotal();
                             var listNom = Model.ListaComida.getNom();
 
                             @* Bucle que recorre cada elemento de la lista para mostrarlo en la tabla *@
-                            @for (int i = 0; i < list.Count; i++)
+                            @for (int i = 0; i < listID.Count; i++)
                             {
                                 var indice = i + 1; // Contador de filas
                                 <tr>
                                     <td>@indice</td>
                                     <td>@listNom[i]</td>
-                                    <td>@list[i]</td>
+                                   
                                     <td>
                                         @* Campo que muestra la cantidad seleccionada, solo lectura *@
                                         <input type="number" value="@listCant[i]" class="form-control" style="width: 60px;" readonly />
@@ -50,11 +52,12 @@
                                         @* Campo que muestra el precio total, solo lectura *@
                                         <input type="number" value="@listTotal[i]" class="form-control precioTotal" style="width: 100px;" readonly />
                                     </td>
-                                    <td>
-                                        <form asp-action="DeleteComidas" method="post" asp-route-id="@list[i]">
-                                            <button type="submit">Eliminar</button>
+                                    <td class="bg-transparent">
+                                        <form class="bg-transparent" asp-action="DeleteComidas" method="post" asp-route-id="@listID[i]">
+                                            <button class="btn btn-sm btn-outline-danger" type="submit">Eliminar</button>
                                         </form>
                                     </td>
+                                   @*  <td class="opacity-0">@listID[i]</td> *@
                                 </tr>
                             }
                         }

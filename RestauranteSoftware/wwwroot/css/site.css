@@ -55,7 +55,7 @@ form {
     color: #007acc; /* Azul brillante */
 }
 
-.form-control, .form-select {
+.form-control, .form-select, .form-control:read-only {
     background-color: #ffec99; /* Amarillo suave */
     border: 2px solid #ffd700; /* Amarillo brillante */
     border-radius: 5px;
@@ -63,13 +63,13 @@ form {
     color: #007acc; /* Azul brillante */
 }
 
-    .form-control:hover, .form-select:hover {
+    .form-control:hover, .form-select:hover{
         background-color: #ffdd55; /* Amarillo claro */
         cursor: pointer;
         color: #0099ff; /* Azul brillante */
     }
 
-    .form-control:focus, .form-select:focus {
+    .form-control:focus, .form-select:focus{
         background-color: #ffd966; /* Amarillo intermedio */
         color: #007acc; /* Azul brillante */
         outline: none;
@@ -107,7 +107,7 @@ table {
 }
 
 
-thead tr {
+thead {
     background-color: #fff1a1; /* Fondo del encabezado amarillo brillante */
     padding: 8px;
     text-align: left;
