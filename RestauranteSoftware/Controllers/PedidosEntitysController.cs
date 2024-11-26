@@ -88,10 +88,11 @@ namespace RestauranteSoftware.Controllers
             // Agrega los objetos (páginas) al documento PDF
             pdf.Objects.Add(new ObjectSettings
             {
-                Page = urlPagina, // La URL de la página que se convertirá en PDF
+                Page = urlPagina,
                 WebSettings = new WebSettings
                 {
                     DefaultEncoding = "utf-8",
+                    Background = false // Esto deshabilita imágenes de fondo
                 }
             });
 

@@ -1,9 +1,6 @@
 ﻿/* General */
 body, html {
-    background-image: url('https://preview.redd.it/gwjxr3fr2ny71.jpg?auto=webp&s=504607a098cf157f2c12ffb689d9f7f64672292d');
-    background-attachment: fixed;
-    background-position: bottom;
-    background-size: cover;
+   
     color: #007acc;
     font-family: 'Source Sans Pro', sans-serif;
     height: 100%;
