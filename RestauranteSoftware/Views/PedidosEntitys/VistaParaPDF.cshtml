@@ -33,32 +33,33 @@ else
             @foreach (var pedido in Model.pedidos)
             {
                 var detalles = Model.detallesPedidos.Where(d => d.PedidoId == pedido.Id).ToList();
-                int rowSpan = detalles.Count > 0 ? detalles.Count : 1;
+                var rowSpan = detalles.Count > 0 ? detalles.Count : 1;  // Asegura que rowSpan sea al menos 1
 
+                // Fila para el pedido (se muestra una sola vez por pedido)
                 <tr>
-                  <td rowspan="@rowSpan">@pedido.Id</td>
-                 <td rowspan="@rowSpan">@pedido.EstadoPedido.Nombre</td>
+                    <td rowspan="@rowSpan">@pedido.Id</td>
+                    <td rowspan="@rowSpan">@pedido.EstadoPedido.Nombre</td>
 
-                    <td rowspan="@rowSpan">
-                        @for (int i = 0; i < detalles.Count; i++)
-                        {
-                            <div>@detalles[i].Comida.Nombre @detalles[i].Comida.Precio Bs</div>
-                        }
-                    </td>
-
-
-                <td rowspan="@rowSpan">@pedido.TotalPedido bs</td>
+                    <!-- Mostrar la primera comida del pedido -->
+                    <td>@detalles.FirstOrDefault()?.Comida.Nombre</td>
+                    <td rowspan="@rowSpan">@pedido.TotalPedido Bs</td>
                 </tr>
 
-               
+                // Fila para cada comida del pedido (si hay más de una)
+                for (int i = 1; i < detalles.Count; i++)
+                {
+                    <tr >
+                        <td >@detalles[i].Comida.Nombre </td>
+                    </tr>
+                }
 
                 totalGeneral += pedido.TotalPedido;
             }
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="5" class="text-end"><strong>Total General:</strong></td>
-                <td><strong>@totalGeneral</strong></td>
+                <td colspan="3" class="text-end"><strong>Total General:</strong></td>
+                <td><strong>@totalGeneral Bs</strong></td>
             </tr>
         </tfoot>
     </table>
