@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Data.Data.Entitys;
 using RestauranteSoftware.Data;
 using RestauranteSoftware.viewModels;
-using System.Collections.ObjectModel;
-using System.Drawing.Printing;
+using DinkToPdf;
+using DinkToPdf.Contracts;
+using Microsoft.AspNetCore.Http.Extensions;
 
 
 namespace RestauranteSoftware.Controllers
@@ -18,22 +15,13 @@ namespace RestauranteSoftware.Controllers
     {
         private readonly ApplicationDbContext _context;
         ListaComida listaComida = ListaComida.getListCom();
-        public PedidosEntitysController(ApplicationDbContext context)
+        private readonly IConverter _converter;
+        public PedidosEntitysController(ApplicationDbContext context, IConverter converter)
         {
             _context = context;
+            _converter = converter;
         }
 
-        // GET: PedidosEntitys
-        public async Task<IActionResult> Index()
-        {
-            var applicationDbContext = _context.Pedidos.Include(p => p.EstadoPedido);
-            PedidosViews pedidoViewModel = new PedidosViews();
-            pedidoViewModel.pedidos = await applicationDbContext.ToListAsync();
-            pedidoViewModel.detallesPedidos = await _context.DetallesPedidos.Include(x => x.Comida).ToListAsync();
-
-
-            return View(pedidoViewModel);
-        }
 
         // GET: PedidosEntitys/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -53,6 +41,93 @@ namespace RestauranteSoftware.Controllers
 
             return View(pedidosEntitys);
         }
+
+
+
+        public async Task<IActionResult> VistaParaPDF(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var pedidosEntitys = await _context.Pedidos
+                .Include(p => p.EstadoPedido)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (pedidosEntitys == null)
+            {
+                return NotFound();
+            }
+
+            return View(pedidosEntitys);
+        }
+
+        public async Task<IActionResult> DescargarPDF(int id)
+        {
+            // Verifica que el ID sea válido
+            if (id <= 0)
+            {
+                return NotFound();
+            }
+
+            // Construye la URL completa de la vista que se desea convertir a PDF
+            string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+            string urlPagina = $"{baseUrl}/PedidosEntitys/VistaParaPDF/{id}";
+
+            // Configuración del documento PDF
+            var pdf = new HtmlToPdfDocument()
+            {
+                GlobalSettings = new GlobalSettings
+                {
+                    PaperSize = PaperKind.A4,
+                    Orientation = Orientation.Portrait,
+                    Margins = new MarginSettings { Top = 10, Bottom = 10, Left = 10, Right = 10 },
+                }
+            };
+
+            // Agrega los objetos (páginas) al documento PDF
+            pdf.Objects.Add(new ObjectSettings
+            {
+                Page = urlPagina, // La URL de la página que se convertirá en PDF
+                WebSettings = new WebSettings
+                {
+                    DefaultEncoding = "utf-8",
+                }
+            });
+
+            // Convierte el documento a PDF
+            var archivoPDF = _converter.Convert(pdf);
+
+            // Genera un nombre único para el archivo PDF
+            string nombrePDF = $"reporte_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
+
+            // Devuelve el archivo PDF como una descarga
+            return File(archivoPDF, "application/pdf", nombrePDF);
+        }
+
+
+
+
+
+
+
+
+
+
+
+        // GET: PedidosEntitys
+        public async Task<IActionResult> Index()
+        {
+            var applicationDbContext = _context.Pedidos.Include(p => p.EstadoPedido);
+            PedidosViews pedidoViewModel = new PedidosViews();
+            pedidoViewModel.pedidos = await applicationDbContext.ToListAsync();
+            pedidoViewModel.detallesPedidos = await _context.DetallesPedidos.Include(x => x.Comida).ToListAsync();
+
+
+            return View(pedidoViewModel);
+        }
+
+       
 
         // GET: PedidosEntitys/Create
         public async Task<IActionResult> Create(PedidosComidas pedidosComidas)
@@ -272,6 +347,8 @@ namespace RestauranteSoftware.Controllers
 
 
         }
+
+
 
 
     }
