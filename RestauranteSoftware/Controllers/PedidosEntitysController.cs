@@ -51,16 +51,34 @@ namespace RestauranteSoftware.Controllers
                 return NotFound();
             }
 
-            var pedidosEntitys = await _context.Pedidos
+            // Obtén el pedido con el estado relacionado
+            var pedido = await _context.Pedidos
                 .Include(p => p.EstadoPedido)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (pedidosEntitys == null)
+
+            if (pedido == null)
             {
                 return NotFound();
             }
 
-            return View(pedidosEntitys);
+            // Obtén el detalle del pedido relacionado
+            var detallePedido = await _context.DetallesPedidos
+                .Include(x => x.Comida)
+                .Where(d => d.PedidoId == id) // Cambiado para obtener todos los detalles
+                .ToListAsync();
+
+            // Crea y asigna el modelo de vista
+            var pedidoViewModel = new PedidosReporte
+            {
+                pedidos = pedido, // Usa un solo objeto
+                detallesPedidos = detallePedido
+            };
+
+            return View(pedidoViewModel);
         }
+
+
+
 
         public async Task<IActionResult> DescargarPDF(int id)
         {
