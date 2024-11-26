@@ -1,0 +1,16 @@
+﻿
+
+a, .field-validation-error, span, .nav-link, .nav-item {
+    color: #007acc; /* Azul brillante */
+}
+
+/* Layout Components */
+header, footer {
+    background-color: #ffda6ace; /* Amarillo brillante */
+}
+
+
+.container-fluid {
+    padding: 2%;
+    background-color: rgba(255, 236, 128, 0.5); /* Amarillo brillante semitransparente */
+}

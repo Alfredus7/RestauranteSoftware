@@ -1,74 +1,68 @@
-﻿@model RestauranteSoftware.viewModels.PedidosReporte
+﻿@model RestauranteSoftware.viewModels.PedidosViews
 
 @{
-    ViewData["Title"] = "Details";
-    
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutReport.cshtml";
+    var fechaReporte = Model.pedidos.Min(p => p.Fecha).ToString("dd/MM/yyyy");
 }
-<style>
-    body {
-        background-color: white !important;
-        background-image: none !important;
-    }
-</style>
 
+<h1>Reporte de Pedidos - Fecha: @fechaReporte</h1>
 
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Pedido #</th>
+            <th>Estado</th>
+           @*  <th>Fecha</th> *@
+            <th>Comida</th>
+            <th>Cantidad</th>
+            <th>Total Pedido</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            decimal totalGeneral = 0;
+        }
 
-<h1>reporte</h1>
+        @foreach (var pedido in Model.pedidos)
+        {
+            var detalles = Model.detallesPedidos.Where(d => d.PedidoId == pedido.Id).ToList();
+            int rowSpan = detalles.Count > 0 ? detalles.Count : 1;
 
-
-<div class="bordered-div">
-    <div class="container mt-5">
-
-
-        <hr />
-
-        <table class="table table-striped">
-            <div class="Theader">
-                <h2 class="text-center">Detalles de Compra</h2>
-
-                <div class="row">
-                    <div class="col-md-3">
-                        <h5>Numero Pedido:@Model.pedidos.Id </h5>
-                    </div>
-
-                    <div class="col-md-3">
-                        <h5>Estado: @Model.pedidos.EstadoPedido.Nombre  </h5>
-                    </div>
-                    <div class="col-md-3 ">
-                        <h5>Fecha: @Model.pedidos.Fecha</h5>
-                    </div>
-
-                </div>
-            </div>
-            <thead>
-                <tr>
-
-                    <th>Comida</th>
-                    <th>Cantidad</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var items in Model.detallesPedidos)
+            <tr>
+                <td rowspan="@rowSpan">@pedido.Id</td>
+                <td rowspan="@rowSpan">@pedido.EstadoPedido.Nombre</td>
+              @*   <td rowspan="@rowSpan">@pedido.Fecha.ToString("dd/MM/yyyy")</td>
+ *@
+                @if (detalles.Count > 0)
                 {
-                    @if (items.PedidoId == Model.pedidos.Id)
-                    {
-                        <tr>
-
-                            <td>@items.Comida.Nombre</td>
-                            <td>@items.Cantidad</td>
-
-                        </tr>
-                    }
-
+                    <td>@detalles[0].Comida.Nombre</td>
+                    <td>@detalles[0].Cantidad</td>
+                }
+                else
+                {
+                    <td colspan="2">Sin detalles</td>
                 }
 
+                <td rowspan="@rowSpan">@pedido.TotalPedido</td>
+            </tr>
 
-            </tbody>
+            @for (int i = 1; i < detalles.Count; i++)
+            {
+                <tr>
+                    <td>@detalles[i].Comida.Nombre</td>
+                    <td>@detalles[i].Cantidad</td>
+                </tr>
+            }
 
-        </table>
-        <div class="TFooter"> <h3>Precio Total: @Model.pedidos.TotalPedido</h3>   </div>
+            totalGeneral += pedido.TotalPedido;
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5" class="text-end"><strong>Total General:</strong></td>
+            <td><strong>@totalGeneral</strong></td>
+        </tr>
+    </tfoot>
+</table>
 
-
-    </div>
-</div>

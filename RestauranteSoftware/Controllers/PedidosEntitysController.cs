@@ -44,34 +44,30 @@ namespace RestauranteSoftware.Controllers
 
 
 
-        public async Task<IActionResult> VistaParaPDF(int? id)
+        public async Task<IActionResult> VistaParaPDF(string fecha)
         {
-            if (id == null)
+            if (!DateTime.TryParse(fecha, out DateTime fechaConvertida))
             {
-                return NotFound();
+                // Manejar error si la fecha no es válida
+                return BadRequest("Fecha inválida.");
             }
 
-            // Obtén el pedido con el estado relacionado
-            var pedido = await _context.Pedidos
+            // Filtrar pedidos por la fecha convertida
+            var applicationDbContext = _context.Pedidos
                 .Include(p => p.EstadoPedido)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Where(p => p.Fecha.Date == fechaConvertida.Date);
 
-            if (pedido == null)
+            // Crear el modelo de vista
+            PedidosViews pedidoViewModel = new PedidosViews
             {
-                return NotFound();
-            }
+                // Asignar los pedidos filtrados
+                pedidos = await applicationDbContext.ToListAsync(),
 
-            // Obtén el detalle del pedido relacionado
-            var detallePedido = await _context.DetallesPedidos
-                .Include(x => x.Comida)
-                .Where(d => d.PedidoId == id) // Cambiado para obtener todos los detalles
-                .ToListAsync();
-
-            // Crea y asigna el modelo de vista
-            var pedidoViewModel = new PedidosReporte
-            {
-                pedidos = pedido, // Usa un solo objeto
-                detallesPedidos = detallePedido
+                // Filtrar detalles de pedidos relacionados
+                detallesPedidos = await _context.DetallesPedidos
+                    .Include(x => x.Comida)
+                    .Where(dp => dp.Pedido.Fecha.Date == fechaConvertida.Date)
+                    .ToListAsync()
             };
 
             return View(pedidoViewModel);
@@ -80,17 +76,20 @@ namespace RestauranteSoftware.Controllers
 
 
 
-        public async Task<IActionResult> DescargarPDF(int id)
+
+
+        public async Task<IActionResult> DescargarPDF(string fecha)
         {
-            // Verifica que el ID sea válido
-            if (id <= 0)
+
+            if (!DateTime.TryParse(fecha, out DateTime fechaConvertida))
             {
-                return NotFound();
+                // Manejar error si la fecha no es válida
+                return BadRequest("Fecha inválida.");
             }
 
-            // Construye la URL completa de la vista que se desea convertir a PDF
+            // Construir la URL completa de la vista que se desea convertir a PDF
             string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
-            string urlPagina = $"{baseUrl}/PedidosEntitys/VistaParaPDF/{id}";
+            string urlPagina = $"{baseUrl}/PedidosEntitys/VistaParaPDF?fecha={fecha}";
 
             // Configuración del documento PDF
             var pdf = new HtmlToPdfDocument()
@@ -365,6 +364,16 @@ namespace RestauranteSoftware.Controllers
             return View(pedido);
 
 
+        }
+        public async Task<PedidosViews> GetPedidosByDate(DateTime fecha)
+        {
+            PedidosViews pedidosViews = new PedidosViews();
+            var applicationDbContext = _context.Pedidos.Include(p => p.EstadoPedido).Where(x => x.Fecha.Date == fecha.Date);
+            PedidosViews pedidoViewModel = new PedidosViews();
+            pedidoViewModel.pedidos = await applicationDbContext.ToListAsync();
+            pedidoViewModel.detallesPedidos = await _context.DetallesPedidos.Include(x => x.Comida).ToListAsync();
+                
+            return (pedidosViews);
         }
 
 

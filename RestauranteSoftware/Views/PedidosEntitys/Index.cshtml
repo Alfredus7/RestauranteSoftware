@@ -13,7 +13,7 @@
 <div class="row">
     @foreach (var item in Model.pedidos)
     {
-        <div class="col-md-4 mb-4">
+        <div class="col-md-3 mb-4">
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title">Pedido Nro @item.Id</h5>
@@ -26,7 +26,10 @@
                         <button class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal-@item.Id">
                             Ver Comidas
                         </button>
-                        <a class="btn btn-primary btn-sm" asp-route-id="@item.Id" asp-action="DescargarPDF">Descargar PDF</a>
+                        <a class="btn btn-primary btn-sm" asp-action="DescargarPDF" asp-route-fecha="@item.Fecha.ToString("yyyy-MM-dd")">
+                            Descargar PDF
+                        </a>
+
                     </div>
                 </div>
             </div>
