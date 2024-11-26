@@ -4,56 +4,29 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Unidad3P1</title>
+    <title>@ViewData["Title"] - RestauranteSoftware</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Unidad3P1.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/RestauranteSoftware.styles.css" asp-append-version="true" />
 </head>
 
-<style>
-    body {
-        background-image: url('https://preview.redd.it/gwjxr3fr2ny71.jpg?auto=webp&s=504607a098cf157f2c12ffb689d9f7f64672292d');
-        background-attachment: fixed;
-        background-position: bottom;
-        background-size: cover;
-    }
-</style>
-
-<body class="d-flex flex-column min-vh-100 bg-light">
+<body class="d-flex flex-column min-vh-75">
     <header>
         <nav class="navbar navbar-expand-sm navbar-light">
             <div class="container-fluid">
                 <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index" style="color: #007acc;">
-                    <img src="https://i.ibb.co/g4NdFCz/Firefly-un-logo-con-una-hamburguesa-con-un-rayo-fondo-celeste-94803.jpg" alt="Logo" class="rounded-circle me-4" style="width:  4em; height:  4em;">
-                     SpeedFoost
-                     
+                    <img src="https://i.ibb.co/g4NdFCz/Firefly-un-logo-con-una-hamburguesa-con-un-rayo-fondo-celeste-94803.jpg" alt="Logo" class="rounded-circle me-4" style="width: 4em; height: 4em;">
+                    SpeedFoost
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarNav" style="color: #007acc;">
+                <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        <!-- Add other navigation items if needed -->
-                    </ul>
-                    <partial name="_LoginPartial" class="container-fluid text-center" />
-                </div>
-            </div>
-        </nav>
-    </header>
-
-
-    <div class="container-fluid flex-grow-1">
-        <div class="row h-100">
-            @if (User.Identity.IsAuthenticated)
-            {
-                <nav class="col-md-2 d-none d-md-block sidebar">
-                    <div class="position-sticky">
-                        <ul class="nav flex-column p-3">
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Comidas" asp-action="Index">Comidas</a>
                             </li>
@@ -63,34 +36,26 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="EstadosPedidosEntitys" asp-action="Index">Estados de Pedidos</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="DetallesPedidos" asp-action="Index">Detalles de Pedidos</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            }
-            else
-            {
-                <nav class="col-md-2 d-none d-md-block sidebar">
-                    <div class="position-sticky">
-                        <ul class="nav flex-column p-3">
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            }
-            <main role="main" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                @RenderBody()
-            </main>
-        </div>
+                        }
+                        <partial name="_LoginPartial" />
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+
+
+    <div class="container-fluid flex-grow-1">
+        <main role="main" class="px-md-4">
+            @RenderBody()
+        </main>
     </div>
 
     <footer class="footer mt-auto py-3">
         <div class="container m-3">
-            <span>resstaurante comida rapida - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></span>
+            <span>Restaurante comida rápida - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></span>
         </div>
     </footer>
 
@@ -101,6 +66,3 @@
 </body>
 
 </html>
-
-
-

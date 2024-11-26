@@ -1,14 +1,25 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Panel de Gestión - Restaurante Rápido";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <!-- Imagen destacada -->
+    <div class="text-center">
+        <img src="https://www.franquiciasdecomida.com.mx/storage/2014/02/negocio-de-comida-rapida.jpg" alt="Restaurante de comida rápida" class="img-fluid rounded shadow-lg">
+    </div>
 
-   @*  <a class="btn btn-primary" asp-controller="Home" asp-action="MostrarPDFenPagina" target="_blank">Ver PDF en pagina</a> *@
+    <!-- Descripción del restaurante -->
+    <div class="mt-5 text-center">
+        <h1 class="display-4 text-primary">Restaurante Fast Food Express</h1>
+        <p class="lead">Somos especialistas en comida rápida, ofreciendo platos deliciosos y de calidad para nuestros clientes. Aquí encontrarás un ambiente dinámico y organizado, donde la rapidez y eficiencia son nuestra prioridad.</p>
+        <p >Nuestro equipo trabaja para garantizar que cada pedido llegue a tiempo y cumpla con los más altos estándares de sabor y frescura.</p>
+    </div>
 
-    <br />
-    <br />
-   @*  <embed src="@Url.Action("MostrarPDFenPagina","Home")" width="800" height="400" type="application/pdf" /> *@
+    <!-- Ubicación -->
+    <div class="mt-5 text-center">
+        <h2 >Nuestra Ubicación</h2>
+        <p class="lead">Encuéntranos en:</p>
+        <p><strong>Avenida Principal 123, Ciudad de Ejemplo</strong></p>
+        <p>Horario de Atención: Lunes a Domingo, 10:00 AM - 10:00 PM</p>
+    </div>
 </div>
