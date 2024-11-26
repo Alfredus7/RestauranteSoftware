@@ -8,6 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Extension\**" />
+    <Compile Remove="ViewsModels\**" />
+    <Content Remove="Extension\**" />
+    <Content Remove="ViewsModels\**" />
+    <EmbeddedResource Remove="Extension\**" />
+    <EmbeddedResource Remove="ViewsModels\**" />
+    <None Remove="Extension\**" />
+    <None Remove="ViewsModels\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="DinkToPdf" Version="1.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
@@ -22,7 +33,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewsModels\" />
+    <None Include="wwwroot\LibreriaPDF\libwkhtmltox.dll" />
+    <None Include="wwwroot\LibreriaPDF\libwkhtmltox.dylib" />
+    <None Include="wwwroot\LibreriaPDF\libwkhtmltox.so" />
   </ItemGroup>
 
   <ItemGroup>
