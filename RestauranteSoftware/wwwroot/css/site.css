@@ -12,9 +12,13 @@ body, html {
 }
 /* Card */
 .card {
-  
     border: none;
     border-radius: 10%;
+    background-color: #ffd700; /* Amarillo brillante */
+    color: #007acc; /* Azul brillante */
+}
+
+.modal-content {
     background-color: #ffd700; /* Amarillo brillante */
     color: #007acc; /* Azul brillante */
 }
@@ -82,32 +86,20 @@ table {
     background-color: #fff2cc; /* Fondo amarillo claro */
 }
 
-.Theader {
-    background-color: rgb(255, 241, 199); /* Bordes amarillos */
-    padding: 8px;
-    text-align: left;
-    color: #007acc; /* Azul brillante */
-}
-
 
 thead {
-    background-color: #fff1a1; /* Fondo del encabezado amarillo brillante */
+    background-color: #fff7c7; /* Fondo del encabezado amarillo brillante */
     padding: 8px;
     text-align: left;
-    color: #007acc; /* Azul brillante */
+    color: #0063a5; /* Azul brillante */
 }
 
-tbody tr {
+tbody tr, tbody ul {
     color: #0061a1; /* Azul brillante */
-    background-color: #ffd52e; /* Fondo amarillo intermedio */
+    background-color: #ffe992; /* Fondo amarillo intermedio */
 }
 
-    tbody tr:hover {
-        color: #0099ff; /* Azul brillante */
+    tbody tr:hover, tbody ul:hover {
+        color: #003a61; /* Azul brillante */
+        background-color: #ffdc4f; /* Fondo amarillo intermedio */
     }
-.TFooter {
-    background-color: #007acc; /* Bordes amarillos */
-    padding: 0.5em;
-    text-align: right;
-    color: rgb(255, 241, 199); /* Azul brillante */
-}
