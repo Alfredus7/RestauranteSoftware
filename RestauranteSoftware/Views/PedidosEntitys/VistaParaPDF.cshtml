@@ -3,66 +3,72 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutReport.cshtml";
-    var fechaReporte = Model.pedidos.Min(p => p.Fecha).ToString("dd/MM/yyyy");
+    var fechaReporte = Model.pedidos.Any() ? Model.pedidos.Min(p => p.Fecha).ToString("dd/MM/yyyy") : string.Empty;
 }
 
 <h1>Reporte de Pedidos - Fecha: @fechaReporte</h1>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Pedido #</th>
-            <th>Estado</th>
-           @*  <th>Fecha</th> *@
-            <th>Comida</th>
-            <th>Cantidad</th>
-            <th>Total Pedido</th>
-        </tr>
-    </thead>
-    <tbody>
-        @{
-            decimal totalGeneral = 0;
-        }
-
-        @foreach (var pedido in Model.pedidos)
-        {
-            var detalles = Model.detallesPedidos.Where(d => d.PedidoId == pedido.Id).ToList();
-            int rowSpan = detalles.Count > 0 ? detalles.Count : 1;
-
+@if (ViewData["NoPedidos"] != null)
+{
+    <div class="alert alert-warning">
+        @ViewData["NoPedidos"]
+    </div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td rowspan="@rowSpan">@pedido.Id</td>
-                <td rowspan="@rowSpan">@pedido.EstadoPedido.Nombre</td>
-              @*   <td rowspan="@rowSpan">@pedido.Fecha.ToString("dd/MM/yyyy")</td>
- *@
-                @if (detalles.Count > 0)
-                {
-                    <td>@detalles[0].Comida.Nombre</td>
-                    <td>@detalles[0].Cantidad</td>
-                }
-                else
-                {
-                    <td colspan="2">Sin detalles</td>
-                }
-
-                <td rowspan="@rowSpan">@pedido.TotalPedido</td>
+                <th>Pedido #</th>
+                <th>Estado</th>
+                <th>Comida</th>
+                <th>Cantidad</th>
+                <th>Total Pedido</th>
             </tr>
-
-            @for (int i = 1; i < detalles.Count; i++)
-            {
-                <tr>
-                    <td>@detalles[i].Comida.Nombre</td>
-                    <td>@detalles[i].Cantidad</td>
-                </tr>
+        </thead>
+        <tbody>
+            @{
+                decimal totalGeneral = 0;
             }
 
-            totalGeneral += pedido.TotalPedido;
-        }
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="5" class="text-end"><strong>Total General:</strong></td>
-            <td><strong>@totalGeneral</strong></td>
-        </tr>
-    </tfoot>
-</table>
+            @foreach (var pedido in Model.pedidos)
+            {
+                var detalles = Model.detallesPedidos.Where(d => d.PedidoId == pedido.Id).ToList();
+                int rowSpan = detalles.Count > 0 ? detalles.Count : 1;
+
+                <tr>
+                    <td rowspan="@rowSpan">@pedido.Id</td>
+                    <td rowspan="@rowSpan">@pedido.EstadoPedido.Nombre</td>
+                    @if (detalles.Count > 0)
+                    {
+                        <td>@detalles[0].Comida.Nombre</td>
+                        <td>@detalles[0].Cantidad</td>
+                    }
+                    else
+                    {
+                        <td colspan="2">Sin detalles</td>
+                    }
+
+                    <td rowspan="@rowSpan">@pedido.TotalPedido</td>
+                </tr>
+
+                @for (int i = 1; i < detalles.Count; i++)
+                {
+                    <tr>
+                        <td>@detalles[i].Comida.Nombre</td>
+                        <td>@detalles[i].Cantidad</td>
+                    </tr>
+                }
+
+                totalGeneral += pedido.TotalPedido;
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5" class="text-end"><strong>Total General:</strong></td>
+                <td><strong>@totalGeneral</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+}
 

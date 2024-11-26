@@ -70,6 +70,13 @@ namespace RestauranteSoftware.Controllers
                     .ToListAsync()
             };
 
+            // Si no hay pedidos, enviar un mensaje indicando que no hay pedidos para esa fecha
+            if (!pedidoViewModel.pedidos.Any())
+            {
+                // No hay pedidos para esa fecha
+                ViewData["NoPedidos"] = "No hay pedidos para la fecha seleccionada.";
+            }
+
             return View(pedidoViewModel);
         }
 
