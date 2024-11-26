@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RestauranteSoftware.Data;
-
+using Rotativa;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

@@ -122,3 +122,9 @@ tbody tr {
     tbody tr:hover {
         color: #0099ff; /* Azul brillante */
     }
+.TFooter {
+    background-color: #007acc; /* Bordes amarillos */
+    padding: 0.5em;
+    text-align: right;
+    color: rgb(255, 241, 199); /* Azul brillante */
+}

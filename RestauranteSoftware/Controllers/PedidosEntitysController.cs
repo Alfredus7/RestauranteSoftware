@@ -9,6 +9,8 @@ using Data.Data.Entitys;
 using RestauranteSoftware.Data;
 using RestauranteSoftware.viewModels;
 using System.Collections.ObjectModel;
+using Rotativa;
+using System.Drawing.Printing;
 
 
 namespace RestauranteSoftware.Controllers
@@ -247,5 +249,41 @@ namespace RestauranteSoftware.Controllers
             listaComida.eliminarComida(i);
             return RedirectToAction(nameof(Create), pedidosComidas);
         }
+
+        public async Task<IActionResult> Imprimir(int? id)
+        {
+            // Validación inicial de parámetros
+            if (id == null)
+            {
+                return NotFound("El ID del pedido no fue proporcionado.");
+            }
+
+            // Buscar el pedido en la base de datos
+            var pedido = await _context.Pedidos
+                .Include(p => p.EstadoPedido) // Incluir la relación con EstadoPedido
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (pedido == null)
+            {
+                return NotFound($"No se encontró un pedido con el ID {id}.");
+            }
+
+
+            // Pasa el modelo a la vista y genera un PDF
+            // Generar el PDF usando Rotativa
+            var pdf = new ViewAsPdf("PedidoDetalle", pedido)
+            {
+                FileName = $"Pedido_{pedido.Id}.pdf",
+                PageSize = Rotativa.Options.Size.A4,
+                PageOrientation = Rotativa.Options.Orientation.Portrait,
+                CustomSwitches = "--no-stop-slow-scripts --disable-smart-shrinking"
+            };
+
+            return (IActionResult)pdf; // Retorno explícito
+
+
+        }
+
+
     }
 }
