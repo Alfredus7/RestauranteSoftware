@@ -19,6 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="LibreriaPDF\libwkhtmltox.dll" />
+    <Content Include="LibreriaPDF\libwkhtmltox.dylib" />
+    <Content Include="LibreriaPDF\libwkhtmltox.so" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="DinkToPdf" Version="1.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
@@ -30,12 +36,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\LibreriaPDF\libwkhtmltox.dll" />
-    <None Include="wwwroot\LibreriaPDF\libwkhtmltox.dylib" />
-    <None Include="wwwroot\LibreriaPDF\libwkhtmltox.so" />
   </ItemGroup>
 
   <ItemGroup>
