@@ -21,9 +21,8 @@ else
             <tr>
                 <th>Pedido #</th>
                 <th>Estado</th>
-                <th>Comida</th>
-                <th>Cantidad</th>
-                <th>Total Pedido</th>
+                <th>Comidas</th>
+                <th>Precio Total</th>
             </tr>
         </thead>
         <tbody>
@@ -37,28 +36,21 @@ else
                 int rowSpan = detalles.Count > 0 ? detalles.Count : 1;
 
                 <tr>
-                    <td rowspan="@rowSpan">@pedido.Id</td>
-                    <td rowspan="@rowSpan">@pedido.EstadoPedido.Nombre</td>
-                    @if (detalles.Count > 0)
-                    {
-                        <td>@detalles[0].Comida.Nombre</td>
-                        <td>@detalles[0].Cantidad</td>
-                    }
-                    else
-                    {
-                        <td colspan="2">Sin detalles</td>
-                    }
+                  <td rowspan="@rowSpan">@pedido.Id</td>
+                 <td rowspan="@rowSpan">@pedido.EstadoPedido.Nombre</td>
 
-                    <td rowspan="@rowSpan">@pedido.TotalPedido</td>
+                    <td rowspan="@rowSpan">
+                        @for (int i = 0; i < detalles.Count; i++)
+                        {
+                            <div>@detalles[i].Comida.Nombre @detalles[i].Comida.Precio Bs</div>
+                        }
+                    </td>
+
+
+                <td rowspan="@rowSpan">@pedido.TotalPedido bs</td>
                 </tr>
 
-                @for (int i = 1; i < detalles.Count; i++)
-                {
-                    <tr>
-                        <td>@detalles[i].Comida.Nombre</td>
-                        <td>@detalles[i].Cantidad</td>
-                    </tr>
-                }
+               
 
                 totalGeneral += pedido.TotalPedido;
             }
