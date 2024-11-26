@@ -9,7 +9,6 @@ using Data.Data.Entitys;
 using RestauranteSoftware.Data;
 using RestauranteSoftware.viewModels;
 using System.Collections.ObjectModel;
-using Rotativa;
 using System.Drawing.Printing;
 
 
@@ -269,17 +268,7 @@ namespace RestauranteSoftware.Controllers
             }
 
 
-            // Pasa el modelo a la vista y genera un PDF
-            // Generar el PDF usando Rotativa
-            var pdf = new ViewAsPdf("PedidoDetalle", pedido)
-            {
-                FileName = $"Pedido_{pedido.Id}.pdf",
-                PageSize = Rotativa.Options.Size.A4,
-                PageOrientation = Rotativa.Options.Orientation.Portrait,
-                CustomSwitches = "--no-stop-slow-scripts --disable-smart-shrinking"
-            };
-
-            return (IActionResult)pdf; // Retorno explícito
+            return View(pedido);
 
 
         }
