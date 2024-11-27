@@ -41,7 +41,7 @@ else
                     <td rowspan="@rowSpan">@pedido.EstadoPedido.Nombre</td>
 
                     <!-- Mostrar la primera comida del pedido -->
-                    <td>@detalles.FirstOrDefault()?.Comida.Nombre</td>
+                    <td >@detalles.FirstOrDefault()?.Comida.Nombre</td>
                     <td rowspan="@rowSpan">@pedido.TotalPedido Bs</td>
                 </tr>
 
@@ -49,7 +49,8 @@ else
                 for (int i = 1; i < detalles.Count; i++)
                 {
                     <tr >
-                        <td >@detalles[i].Comida.Nombre </td>
+                        <!-- Estilo para quitar borde -->
+                        <td >@detalles[i].Comida.Nombre</td> <!-- Quitar borde a esta celda también -->
                     </tr>
                 }
 
