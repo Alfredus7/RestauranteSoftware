@@ -189,7 +189,7 @@ namespace RestauranteSoftware.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Fecha,EstadoId,IsPrioridad,TotalPedido")] PedidosEntitys pedidosEntitys, int Totalito)
+        public async Task<IActionResult> Create([Bind("Id,Fecha,EstadoId,IsPrioridad,TotalPedido")] PedidosEntitys pedidosEntitys, int Totalito, bool IsPrioridad)
         {
             if (ModelState.IsValid)
             {
@@ -197,8 +197,9 @@ namespace RestauranteSoftware.Controllers
                 // Asigna la fecha actual al campo Fecha si es necesario
                 pedidosEntitys.EstadoId = 1; //id de pendiente
                 pedidosEntitys.Fecha = DateTime.Now;
-                pedidosEntitys.TotalPedido = Totalito; //aquí colocar pedido
-                var list = listaComida.getIdCom();
+                pedidosEntitys.TotalPedido = Totalito;
+                pedidosEntitys.IsPrioridad = IsPrioridad;
+                                var list = listaComida.getIdCom();
                 var listCant = listaComida.getCant();
                 _context.Add(pedidosEntitys);
 
@@ -390,8 +391,50 @@ namespace RestauranteSoftware.Controllers
             return (pedidosViews);
         }
 
+        public async Task<IActionResult> Comanda()
+        {
+            ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre");
+            var applicationDbContext = _context.Pedidos
+                .Include(p => p.EstadoPedido)
+                .OrderByDescending(p => p.IsPrioridad) // Prioritarios primero
+                .ThenByDescending(p => p.Fecha)
+                .Where(p => p.EstadoId == 1);
+
+            PedidosViews pedidoViewModel = new PedidosViews();
+            pedidoViewModel.pedidos = await applicationDbContext.ToListAsync();
+            pedidoViewModel.detallesPedidos = await _context.DetallesPedidos
+                .Include(x => x.Comida)
+                .ToListAsync();
+
+            return View(pedidoViewModel);
+        }
 
 
+        public async Task<IActionResult> CambiarEstado(int id, DateTime fecha, int totalPedido, bool isPrioridad, [Bind("EstadoId")] PedidosEntitys pedidosEntitys, int EstadoId)
+        {
+            pedidosEntitys.Id = id;
+            pedidosEntitys.EstadoId = EstadoId; //id de pendiente
+            pedidosEntitys.Fecha = fecha;
+            pedidosEntitys.TotalPedido = totalPedido;
+            pedidosEntitys.IsPrioridad = isPrioridad;
+            try
+            {
+                _context.Update(pedidosEntitys);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PedidosEntitysExists(pedidosEntitys.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Comanda));
+        }
 
     }
 }

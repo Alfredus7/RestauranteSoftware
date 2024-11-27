@@ -42,4 +42,11 @@
     <ProjectReference Include="..\librerias\data\Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\PedidosEntitys\Comanda.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

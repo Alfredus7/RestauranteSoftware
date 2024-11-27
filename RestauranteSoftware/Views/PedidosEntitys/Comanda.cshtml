@@ -1,0 +1,109 @@
+﻿@model RestauranteSoftware.viewModels.PedidosViews
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Comanda</h1>
+
+
+<div class="row">
+    @{
+        int numPedido = 1; // Inicializa el contador de pedidos
+    }
+    @foreach (var item in Model.pedidos)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Pedido Nro @numPedido</h5> <!-- Usa el contador aquí -->
+                    <p class="card-text">
+                        <strong>Identificador:</strong> @item.Id <br />
+                        <strong>Estado:</strong> @item.EstadoPedido.Nombre <br />
+                        <strong>Prioridad:</strong> @item.IsPrioridad <br />
+                        <strong>Fecha:</strong> @item.Fecha.ToString("dd/MM/yyyy") <br />
+                    </p>
+                    <!-- Botón para mostrar el modal Cambiar Estado -->
+                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#cambiarEstadoModal-@item.Id">
+                        Cambiar Estado
+                    </button>
+
+                    <!-- Botón para mostrar el modal Detalles -->
+                    <button class="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#detailsModal-@item.Id">
+                        Ver detalles
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Cambiar Estado -->
+        <div class="modal fade" id="cambiarEstadoModal-@item.Id" tabindex="-1" aria-labelledby="cambiarEstadoModalLabel-@item.Id" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cambiarEstadoModalLabel-@item.Id">Cambiar Estado</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form asp-action="CambiarEstado">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <label class="control-label">cambiar pedido del id @item.Id</label>
+                            <input name="id" type="hidden" value="@item.Id" />
+                            <input name="isPrioridad" type="hidden" value="@item.IsPrioridad" />
+                            <input name="fecha" type="hidden" value="@item.Fecha" />
+                            <input name="totalPedido" type="hidden" value="@item.TotalPedido" />
+                            <div class="form-group">
+                                <label class="control-label">Estado</label>
+                                <select name="EstadoId" class="form-control" asp-items="ViewBag.EstadoId"></select>
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Guardar" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Detalles -->
+        <div class="modal fade" id="detailsModal-@item.Id" tabindex="-1" aria-labelledby="detailsModalLabel-@item.Id" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title" id="detailsModalLabel-@item.Id">Detalles de Comidas - Pedido #@numPedido</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Tabla de detalles de comidas -->
+                        <table class="table border-0">
+                            <thead>
+                                <tr>
+                                    <th>Comida</th>
+                                    <th>Cantidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var items in Model.detallesPedidos)
+                                {
+                                    @if (items.PedidoId == item.Id)
+                                    {
+                                        <tr>
+                                            <td>@items.Comida.Nombre</td>
+                                            <td>@items.Cantidad</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Incrementa el contador -->
+        numPedido++;
+    }
+
+</div>
+
