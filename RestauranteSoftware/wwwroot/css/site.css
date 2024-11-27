@@ -42,7 +42,6 @@ form {
 .form-control, .form-select, .form-control:read-only {
     background-color: #ffec99; /* Amarillo suave */
     border: 2px solid #ffd700; /* Amarillo brillante */
-    border-radius: 5px;
     font-size: 16px;
     color: #007acc; /* Azul brillante */
 }

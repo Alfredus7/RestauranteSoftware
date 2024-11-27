@@ -21,7 +21,8 @@ namespace Data.Data.Entitys
 
         [Column("estado")]
         public int EstadoId { get; set; }
-
+        [Column("Prioridad")]
+        public bool IsPrioridad { get; set; }
         [Column("total")]
         public int TotalPedido { get; set; }
 

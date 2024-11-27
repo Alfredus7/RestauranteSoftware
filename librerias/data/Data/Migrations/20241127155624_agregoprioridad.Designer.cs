@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestauranteSoftware.Data;
 
@@ -11,9 +12,11 @@ using RestauranteSoftware.Data;
 namespace RestauranteSoftware.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241127155624_agregoprioridad")]
+    partial class agregoprioridad
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,7 +124,7 @@ namespace RestauranteSoftware.Data.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("fecha");
 
-                    b.Property<bool>("IsPrioridad")
+                    b.Property<bool?>("IsPrioridad")
                         .HasColumnType("bit")
                         .HasColumnName("Prioridad");
 
@@ -280,14 +283,14 @@ namespace RestauranteSoftware.Data.Migrations
                         {
                             Id = "5d4725d6-6dc4-4d3f-ab81-dda36159300e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4aad6660-de51-45a1-9eeb-ddcf1dc42a2d",
+                            ConcurrencyStamp = "f8b81546-8fc0-4797-901c-e293465d4ea0",
                             Email = "admin@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedUserName = "ADMIN@EMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIjeFjE48DwIDiZ6JwgTy5Tjulw4vCBCVtvACkobLywwU3wL+dsTYCkKmWbOX9g4Yg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEO57M+zNVTVskcAAdRWZxfk0aWKOblzqbyJbqPEznFjqEoGhePAREhINY6DzdFRsAA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ed3cfd8d-96d7-4f0e-a6fa-9f5279e55b3f",
+                            SecurityStamp = "8b992c63-9477-431c-be78-e612c8830e33",
                             TwoFactorEnabled = false,
                             UserName = "admin@email.com"
                         },
@@ -295,14 +298,14 @@ namespace RestauranteSoftware.Data.Migrations
                         {
                             Id = "7c7b1288-2a9d-4d5f-bf4a-2d8b7b3cbadd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b49dcd4a-1f81-4857-83f9-65e39259a1a7",
+                            ConcurrencyStamp = "06f72947-2c2a-4aa4-9f04-df1b1484fb69",
                             Email = "cajero@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedUserName = "CAJERO@EMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPg0vHbLheQBsvrDB+D89M+UIML9sAEmQk2Wqy92wuFIDsviVMewNvnkSIfunMXNpA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEH1rjJ1J+BzKe5CW9c0c6TqEqRIJBMOsGK2LEm1ai9S7EhcppytV9GNvDUY4WLacvg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "def74058-f7ac-4bfa-8168-01fdc899fffc",
+                            SecurityStamp = "4e75b055-86e3-4291-b6be-7e33901c19e0",
                             TwoFactorEnabled = false,
                             UserName = "cajero@email.com"
                         },
@@ -310,14 +313,14 @@ namespace RestauranteSoftware.Data.Migrations
                         {
                             Id = "6d6c3c9f-1a7d-4d6a-af9a-4d8d3f2a6cdf",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4431d802-8eda-4ada-a418-db70955bdeff",
+                            ConcurrencyStamp = "29e01350-14a8-47b0-aa52-e66091ec998e",
                             Email = "cocinero@email.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedUserName = "COCINERO@EMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEECDWPsbqUqSG52ltG1YvmhVJmdBRJqw7HvmvosC9TMZDsVQs+V/E2NxC49qphoc/w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEF6LKS2vdMbukkNHi427oWLWMjzwMQ57v8RtFr5nO5ney7jbv0F943FWM72DzpsCKA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "36bfcdba-3f54-4134-be62-c100dfd9992b",
+                            SecurityStamp = "2ef51ea8-794d-4ec6-bc3d-1d87e1ca43a6",
                             TwoFactorEnabled = false,
                             UserName = "cocinero@email.com"
                         });

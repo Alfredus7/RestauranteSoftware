@@ -145,7 +145,8 @@ namespace RestauranteSoftware.Controllers
         {
             var applicationDbContext = _context.Pedidos
                 .Include(p => p.EstadoPedido)
-                .OrderByDescending(p => p.Fecha); // Ordenar por la fecha del pedido (ascendente)
+                .OrderByDescending(p => p.IsPrioridad) // Prioritarios primero
+                .ThenByDescending(p => p.Fecha); // Más recientes primero
 
             PedidosViews pedidoViewModel = new PedidosViews();
             pedidoViewModel.pedidos = await applicationDbContext.ToListAsync();
@@ -155,6 +156,7 @@ namespace RestauranteSoftware.Controllers
 
             return View(pedidoViewModel);
         }
+
 
 
 
@@ -187,7 +189,7 @@ namespace RestauranteSoftware.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Fecha,EstadoId,TotalPedido")] PedidosEntitys pedidosEntitys, int Totalito)
+        public async Task<IActionResult> Create([Bind("Id,Fecha,EstadoId,IsPrioridad,TotalPedido")] PedidosEntitys pedidosEntitys, int Totalito)
         {
             if (ModelState.IsValid)
             {
@@ -243,7 +245,7 @@ namespace RestauranteSoftware.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha,EstadoId,TotalPedido")] PedidosEntitys pedidosEntitys)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha,EstadoId,IsPrioridad,TotalPedido")] PedidosEntitys pedidosEntitys)
         {
             if (id != pedidosEntitys.Id)
             {
