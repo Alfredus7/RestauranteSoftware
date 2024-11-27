@@ -143,16 +143,21 @@ namespace RestauranteSoftware.Controllers
         // GET: PedidosEntitys
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Pedidos.Include(p => p.EstadoPedido);
+            var applicationDbContext = _context.Pedidos
+                .Include(p => p.EstadoPedido)
+                .OrderByDescending(p => p.Fecha); // Ordenar por la fecha del pedido (ascendente)
+
             PedidosViews pedidoViewModel = new PedidosViews();
             pedidoViewModel.pedidos = await applicationDbContext.ToListAsync();
-            pedidoViewModel.detallesPedidos = await _context.DetallesPedidos.Include(x => x.Comida).ToListAsync();
-
+            pedidoViewModel.detallesPedidos = await _context.DetallesPedidos
+                .Include(x => x.Comida)
+                .ToListAsync();
 
             return View(pedidoViewModel);
         }
 
-       
+
+
 
         // GET: PedidosEntitys/Create
         public async Task<IActionResult> Create(PedidosComidas pedidosComidas)
