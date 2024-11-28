@@ -15,6 +15,8 @@ namespace Data.Data.Entitys
         [Key]
         [Column("id_pedido")]
         public int Id { get; set; }
+        [Column("NroMesa")]
+        public int NroMesa { get; set; }
 
         [Column("fecha")]
         public DateTime Fecha { get; set; }

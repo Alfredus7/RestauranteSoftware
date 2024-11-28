@@ -24,27 +24,6 @@ namespace RestauranteSoftware.Controllers
         }
 
 
-        // GET: PedidosEntitys/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var pedidosEntitys = await _context.Pedidos
-                .Include(p => p.EstadoPedido)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (pedidosEntitys == null)
-            {
-                return NotFound();
-            }
-
-            return View(pedidosEntitys);
-        }
-
-
-
         public async Task<IActionResult> Reporte(string fecha)
         {
             if (!DateTime.TryParse(fecha, out DateTime fechaConvertida))
@@ -270,7 +249,7 @@ namespace RestauranteSoftware.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Fecha,EstadoId,IsPrioridad,TotalPedido")] PedidosEntitys pedidosEntitys, int Totalito, bool IsPrioridad)
+        public async Task<IActionResult> Create(PedidosEntitys pedidosEntitys, int Totalito, bool IsPrioridad ,int Nro)
         {
             if (ModelState.IsValid)
             {
@@ -280,7 +259,8 @@ namespace RestauranteSoftware.Controllers
                 pedidosEntitys.Fecha = DateTime.Now;
                 pedidosEntitys.TotalPedido = Totalito;
                 pedidosEntitys.IsPrioridad = IsPrioridad;
-                                var list = listaComida.getIdCom();
+                pedidosEntitys.NroMesa = Nro;
+                var list = listaComida.getIdCom();
                 var listCant = listaComida.getCant();
                 _context.Add(pedidosEntitys);
 
@@ -305,59 +285,65 @@ namespace RestauranteSoftware.Controllers
             return View(pedidosEntitys);
         }
 
-        // GET: PedidosEntitys/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var pedidosEntitys = await _context.Pedidos.FindAsync(id);
-            if (pedidosEntitys == null)
-            {
-                return NotFound();
-            }
-            ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre", pedidosEntitys.EstadoId);
-            return View(pedidosEntitys);
-        }
-
         // POST: PedidosEntitys/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Fecha,EstadoId,IsPrioridad,TotalPedido")] PedidosEntitys pedidosEntitys)
+        public async Task<IActionResult> Edit(int id, DateTime fecha, int totalPedido, bool isPrioridad, [Bind("EstadoId")] PedidosEntitys pedidosEntitys, int EstadoId, int Nro)
         {
-            if (id != pedidosEntitys.Id)
+            pedidosEntitys.Id = id;
+            pedidosEntitys.EstadoId = EstadoId; //id de pendiente
+            pedidosEntitys.Fecha = fecha;
+            pedidosEntitys.TotalPedido = totalPedido;
+            pedidosEntitys.IsPrioridad = isPrioridad;
+            pedidosEntitys.NroMesa = Nro;
+            try
             {
-                return NotFound();
+                _context.Update(pedidosEntitys);
+                await _context.SaveChangesAsync();
             }
-
-            if (ModelState.IsValid)
+            catch (DbUpdateConcurrencyException)
             {
-                try
+                if (!PedidosEntitysExists(pedidosEntitys.Id))
                 {
-                    _context.Update(pedidosEntitys);
-                    await _context.SaveChangesAsync();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!PedidosEntitysExists(pedidosEntitys.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre", pedidosEntitys.EstadoId);
-            return View(pedidosEntitys);
+            return RedirectToAction(nameof(Index));
         }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditComanda(int id, DateTime fecha, int totalPedido, bool isPrioridad, [Bind("EstadoId")] PedidosEntitys pedidosEntitys, int EstadoId, int Nro)
+        {
+            pedidosEntitys.Id = id;
+            pedidosEntitys.EstadoId = EstadoId; //id de pendiente
+            pedidosEntitys.Fecha = fecha;
+            pedidosEntitys.TotalPedido = totalPedido;
+            pedidosEntitys.IsPrioridad = isPrioridad;
+            pedidosEntitys.NroMesa = Nro;
+            try
+            {
+                _context.Update(pedidosEntitys);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PedidosEntitysExists(pedidosEntitys.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
+        }
         // GET: PedidosEntitys/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -489,33 +475,5 @@ namespace RestauranteSoftware.Controllers
 
             return View(pedidoViewModel);
         }
-
-
-        public async Task<IActionResult> CambiarEstado(int id, DateTime fecha, int totalPedido, bool isPrioridad, [Bind("EstadoId")] PedidosEntitys pedidosEntitys, int EstadoId)
-        {
-            pedidosEntitys.Id = id;
-            pedidosEntitys.EstadoId = EstadoId; //id de pendiente
-            pedidosEntitys.Fecha = fecha;
-            pedidosEntitys.TotalPedido = totalPedido;
-            pedidosEntitys.IsPrioridad = isPrioridad;
-            try
-            {
-                _context.Update(pedidosEntitys);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PedidosEntitysExists(pedidosEntitys.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return RedirectToAction(nameof(Comanda));
-        }
-
     }
 }

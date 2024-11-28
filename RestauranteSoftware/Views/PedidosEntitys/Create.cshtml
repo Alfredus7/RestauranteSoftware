@@ -75,11 +75,13 @@
             @* Formulario para crear el pedido con campos de fecha, estado y total *@
             <form class="row" asp-action="Create" class="needs-validation" asp-route-Mmodel="Model.IdComidas" novalidate>
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
                 <div class="col-auto">
-                    <label asp-for="Pedido.Fecha" class="form-label"></label>
-                    <input asp-for="Pedido.Fecha" class="form-control" type="date" required />
-                    <span asp-validation-for="Pedido.Fecha" class="text-danger"></span>
+                    <label asp-for="Pedido.NroMesa" class="control-label"></label>
+                    <input asp-for="Pedido.NroMesa" name="Nro" class="form-control" />
+                    <span asp-validation-for="Pedido.NroMesa" class="text-danger"></span>
                 </div>
+
                 <div class="col-auto">
                     <label asp-for="Pedido.TotalPedido" class="form-label"></label>
                     <input asp-for="Pedido.TotalPedido" name="Totalito" class="form-control" id="totalPedido" readonly />

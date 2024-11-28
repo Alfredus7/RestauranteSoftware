@@ -51,6 +51,7 @@
                     <h5 class="card-title">Pedido Nro @numPedido</h5> <!-- Usa el contador aquí -->
                     <p class="card-text">
                         <strong>indetificador:</strong> @item.Id <br />
+                        <strong>Nro:</strong> @item.NroMesa <br />
                         <strong>Estado:</strong> @item.EstadoPedido.Nombre <br />
                         <strong>prioridad:</strong> @item.IsPrioridad  <br />
                         <strong>Fecha:</strong> @item.Fecha.ToString("dd/MM/yyyy") <br />
@@ -79,12 +80,13 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                     </div>
                     <div class="modal-body">
-                        <form asp-action="CambiarEstado">
+                        <form asp-action="Edit">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <label class="control-label">cambiar pedido del id @item.Id</label>
                             <input name="id" type="hidden" value="@item.Id" />
                             <input name="isPrioridad" type="hidden" value="@item.IsPrioridad" />
                             <input name="fecha" type="hidden" value="@item.Fecha" />
+                            <input name="Nro" type="hidden" value="@item.NroMesa" />
                             <input name="totalPedido" type="hidden" value="@item.TotalPedido" />
                             <div class="form-group">
                                 <label class="control-label">Estado</label>

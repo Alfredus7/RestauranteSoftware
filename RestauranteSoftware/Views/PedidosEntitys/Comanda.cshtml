@@ -78,13 +78,14 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                     </div>
                     <div class="modal-body">
-                        <form asp-action="CambiarEstado">
+                        <form asp-action="EditComanda">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <label class="control-label">cambiar pedido del id @item.Id</label>
                             <input name="id" type="hidden" value="@item.Id" />
                             <input name="isPrioridad" type="hidden" value="@item.IsPrioridad" />
                             <input name="fecha" type="hidden" value="@item.Fecha" />
                             <input name="totalPedido" type="hidden" value="@item.TotalPedido" />
+                            <input name="Nro" type="hidden" value="@item.NroMesa" />
                             <div class="form-group">
                                 <label class="control-label">Estado</label>
                                 <select name="EstadoId" class="form-control" asp-items="ViewBag.EstadoId"></select>
