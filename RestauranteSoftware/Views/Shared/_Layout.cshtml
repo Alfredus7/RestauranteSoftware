@@ -11,49 +11,50 @@
 </head>
 
 <body class="d-flex flex-column min-vh-75">
-    <header>
+    <header class="mt-0 bg-warning shadow-sm">
         <nav class="navbar navbar-expand-sm navbar-light">
             <div class="container-fluid">
+                <!-- Logo y nombre de la marca -->
                 <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index" style="color: #007acc;">
-                    <img src="https://i.ibb.co/g4NdFCz/Firefly-un-logo-con-una-hamburguesa-con-un-rayo-fondo-celeste-94803.jpg" alt="Logo" class="rounded-circle me-4" style="width: 4em; height: 4em;">
-                    SpeedFoost
+                    <img src="https://i.ibb.co/g4NdFCz/Firefly-un-logo-con-una-hamburguesa-con-un-rayo-fondo-celeste-94803.jpg"
+                         alt="Logo"
+                         class="rounded-circle me-3"
+                         style="width: 4em; height: 4em;">
+                    <span class="fs-4 fw-bold">SpeedFoost</span>
                 </a>
+
+                <!-- Botón colapsable para dispositivos pequeños -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-
-
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="navbarNav">
+                <!-- Navegación -->
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between" id="navbarNav">
                     <ul class="navbar-nav flex-grow-1">
                         @if (User.Identity.IsAuthenticated)
                         {
-
                             @if (User.IsInRole("Cajero") || User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Comidas" asp-action="Index">Comidas</a>
+                                    <a class="nav-link text-primary" asp-area="" asp-controller="Comidas" asp-action="Index">Comidas</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="PedidosEntitys" asp-action="Index">Pedidos</a>
+                                    <a class="nav-link text-primary" asp-area="" asp-controller="PedidosEntitys" asp-action="Index">Pedidos</a>
                                 </li>
                             }
-
-
                             @if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="EstadosPedidosEntitys" asp-action="Index">Estados de Pedidos</a>
+                                    <a class="nav-link text-primary" asp-area="" asp-controller="EstadosPedidosEntitys" asp-action="Index">Estados de Pedidos</a>
                                 </li>
                             }
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="PedidosEntitys" asp-action="Comanda">Comanda</a>
+                                <a class="nav-link text-primary" asp-area="" asp-controller="PedidosEntitys" asp-action="Comanda">Comanda</a>
                             </li>
-                         
                         }
-                       
                     </ul>
+                    <!-- Login parcial -->
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -63,13 +64,14 @@
 
 
 
-    <div class="container-fluid flex-grow-1">
+
+    <div class="container-fluid main  flex-grow-1">
         <main role="main" class="px-md-4">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="footer mt-auto py-3">
+    <footer class="footer bg-warning mt-auto py-3">
         <div class="container m-3">
             <span>Restaurante comida rápida para sastifacer tu paladar @* - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@</span>
         </div>
