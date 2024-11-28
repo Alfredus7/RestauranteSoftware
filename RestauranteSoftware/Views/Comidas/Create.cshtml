@@ -25,12 +25,6 @@
                 <span asp-validation-for="ImagenUrl" class="text-danger"></span>
             </div>
 
-      @*       <!-- Vista previa de la imagen seleccionada -->
-            <div class="form-group">
-                <label>Vista previa de la imagen:</label>
-                <img id="imagePreview" src="#" alt="Vista previa" style="display:none; max-width: 100%; height: auto;" />
-            </div> *@
-
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
@@ -53,6 +47,13 @@
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
+
+
+        <!-- Vista previa de la imagen seleccionada -->
+        <div class="col-md-4">
+            <label>Vista previa de la imagen:</label>
+            <img id="imagePreview" src="#" alt="Vista previa" style="display:none; max-width: 100%; height:  auto;" />
+        </div>
     </div>
 </div>
 
