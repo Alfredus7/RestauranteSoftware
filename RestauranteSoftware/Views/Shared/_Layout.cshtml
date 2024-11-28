@@ -23,25 +23,38 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
+
+
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="navbarNav">
+                    <ul class="navbar-nav flex-grow-1">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Comidas" asp-action="Index">Comidas</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="PedidosEntitys" asp-action="Index">Pedidos</a>
-                            </li>
+
+                            @if (User.IsInRole("Cajero") || User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Comidas" asp-action="Index">Comidas</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="PedidosEntitys" asp-action="Index">Pedidos</a>
+                                </li>
+                            }
+
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="EstadosPedidosEntitys" asp-action="Index">Estados de Pedidos</a>
+                                </li>
+                            }
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="PedidosEntitys" asp-action="Comanda">Comanda</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="EstadosPedidosEntitys" asp-action="Index">Estados de Pedidos</a>
-                            </li>
+                         
                         }
-                        <partial name="_LoginPartial" />
+                       
                     </ul>
+                    <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>

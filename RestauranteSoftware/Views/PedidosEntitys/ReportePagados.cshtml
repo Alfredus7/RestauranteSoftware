@@ -1,0 +1,67 @@
+﻿@model RestauranteSoftware.viewModels.PedidosViews
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutReport.cshtml";
+    var fechaReporte = Model.pedidos.Any() ? Model.pedidos.Min(p => p.Fecha).ToString("dd/MM/yyyy") : string.Empty;
+}
+
+<h1>Reporte de Pedidos Pagados - Fecha: @fechaReporte</h1>
+
+@if (ViewData["NoPedidos"] != null)
+{
+    <div class="alert alert-warning">
+        @ViewData["NoPedidos"]
+    </div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Pedido #</th>
+                <th>Comidas</th>
+                <th>Precio Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                decimal totalGeneral = 0;
+            }
+
+            @foreach (var pedido in Model.pedidos)
+            {
+                var detalles = Model.detallesPedidos.Where(d => d.PedidoId == pedido.Id).ToList();
+                var rowSpan = detalles.Count > 0 ? detalles.Count : 1;  // Asegura que rowSpan sea al menos 1
+
+                // Fila para el pedido (se muestra una sola vez por pedido)
+                <tr>
+                    <td rowspan="@rowSpan">@pedido.Id</td>
+            
+
+                    <!-- Mostrar la primera comida del pedido -->
+                    <td >@detalles.FirstOrDefault()?.Comida.Nombre</td>
+                    <td rowspan="@rowSpan">@pedido.TotalPedido Bs</td>
+                </tr>
+
+                // Fila para cada comida del pedido (si hay más de una)
+                for (int i = 1; i < detalles.Count; i++)
+                {
+                    <tr >
+                        <!-- Estilo para quitar borde -->
+                        <td >@detalles[i].Comida.Nombre</td> <!-- Quitar borde a esta celda también -->
+                    </tr>
+                }
+
+                totalGeneral += pedido.TotalPedido;
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-end"><strong>Total General:</strong></td>
+                <td><strong>@totalGeneral Bs</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+}
+

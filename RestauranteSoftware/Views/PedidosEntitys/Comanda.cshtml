@@ -7,6 +7,39 @@
 <h1>Comanda</h1>
 
 
+
+@if (User.IsInRole("Cocinero") || User.IsInRole("Admin"))
+{
+    <div class="d-flex justify-content-between mb-3">
+        <button class="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#downloadModal">
+            reporte completados
+        </button>
+    </div>
+}
+
+
+<!-- Modal para descargar PDF -->
+<div class="modal fade" id="downloadModal" tabindex="-1" aria-labelledby="downloadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="downloadModalLabel">Ingrese una fecha valida</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulario para descargar PDF -->
+                <form asp-action="CrearReportePagados" method="get">
+                    <div class="mb-3">
+                        <label for="fecha" class="form-label">Fecha</label>
+                        <input type="date" id="fecha" name="fecha" class="form-control form-control-sm" />
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm">Descargar reporte.PDF</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     @{
         int numPedido = 1; // Inicializa el contador de pedidos
@@ -25,12 +58,12 @@
                     </p>
                     <!-- Botón para mostrar el modal Cambiar Estado -->
                     <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#cambiarEstadoModal-@item.Id">
-                        Cambiar Estado
+                        actualizar Estado
                     </button>
 
                     <!-- Botón para mostrar el modal Detalles -->
                     <button class="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#detailsModal-@item.Id">
-                        Ver detalles
+                        Ver Lista comidas
                     </button>
                 </div>
             </div>

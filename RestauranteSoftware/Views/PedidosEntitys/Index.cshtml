@@ -7,10 +7,11 @@
 <h1>Pedidos</h1>
 
 <div class="d-flex justify-content-between mb-3">
-    <a asp-action="Create" class="btn btn-primary">Crear Nuevo Pedido</a>
+    
     <button class="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#downloadModal">
         crear reporte
     </button>
+    <a asp-action="Create" class="btn btn-primary">Crear Nuevo Pedido</a>
 </div>
 
 
@@ -24,7 +25,7 @@
             </div>
             <div class="modal-body">
                 <!-- Formulario para descargar PDF -->
-                <form asp-action="DescargarPDF" method="get">
+                <form asp-action="CrearReporte" method="get">
                     <div class="mb-3">
                         <label for="fecha" class="form-label">Fecha</label>
                         <input type="date" id="fecha" name="fecha" class="form-control form-control-sm" />
@@ -56,9 +57,45 @@
                         <strong>Total:</strong> @item.TotalPedido
                     </p>
                     <!-- Botón para mostrar el modal -->
-                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detailsModal-@item.Id">
-                        Ver detalles
+                    <!-- Botón para mostrar el modal Cambiar Estado -->
+                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#cambiarEstadoModal-@item.Id">
+                        actualizar Estado
                     </button>
+
+                    <!-- Botón para mostrar el modal Detalles -->
+                    <button class="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#detailsModal-@item.Id">
+                        Ver Lista comidas
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Cambiar Estado -->
+        <div class="modal fade" id="cambiarEstadoModal-@item.Id" tabindex="-1" aria-labelledby="cambiarEstadoModalLabel-@item.Id" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cambiarEstadoModalLabel-@item.Id">Cambiar Estado</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form asp-action="CambiarEstado">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <label class="control-label">cambiar pedido del id @item.Id</label>
+                            <input name="id" type="hidden" value="@item.Id" />
+                            <input name="isPrioridad" type="hidden" value="@item.IsPrioridad" />
+                            <input name="fecha" type="hidden" value="@item.Fecha" />
+                            <input name="totalPedido" type="hidden" value="@item.TotalPedido" />
+                            <div class="form-group">
+                                <label class="control-label">Estado</label>
+                                <select name="EstadoId" class="form-control" asp-items="ViewBag.EstadoId"></select>
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Guardar" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

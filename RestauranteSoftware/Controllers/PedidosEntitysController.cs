@@ -20,6 +20,7 @@ namespace RestauranteSoftware.Controllers
         {
             _context = context;
             _converter = converter;
+
         }
 
 
@@ -44,7 +45,7 @@ namespace RestauranteSoftware.Controllers
 
 
 
-        public async Task<IActionResult> VistaParaPDF(string fecha)
+        public async Task<IActionResult> Reporte(string fecha)
         {
             if (!DateTime.TryParse(fecha, out DateTime fechaConvertida))
             {
@@ -81,11 +82,46 @@ namespace RestauranteSoftware.Controllers
         }
 
 
+        public async Task<IActionResult> ReportePagados(string fecha)
+        {
+            if (!DateTime.TryParse(fecha, out DateTime fechaConvertida))
+            {
+                // Manejar error si la fecha no es válida
+                return BadRequest("Fecha inválida.");
+            }
+
+            // Filtrar pedidos por la fecha y estado completado
+            var applicationDbContext = _context.Pedidos
+                .Include(p => p.EstadoPedido)
+                .Where(p => p.Fecha.Date == fechaConvertida.Date && p.EstadoPedido. Nombre == "Pagado");
+
+            // Crear el modelo de vista
+            PedidosViews pedidoViewModel = new PedidosViews
+            {
+                // Asignar los pedidos filtrados
+                pedidos = await applicationDbContext.ToListAsync(),
+
+                // Filtrar detalles de pedidos relacionados
+                detallesPedidos = await _context.DetallesPedidos
+                    .Include(x => x.Comida)
+                    .Where(dp => dp.Pedido.Fecha.Date == fechaConvertida.Date && dp.Pedido.EstadoPedido.Nombre == "Pagado")
+                    .ToListAsync()
+            };
+
+            // Si no hay pedidos, enviar un mensaje indicando que no hay pedidos para esa fecha
+            if (!pedidoViewModel.pedidos.Any())
+            {
+                // No hay pedidos para esa fecha
+                ViewData["NoPedidos"] = "No hay pedidos para la fecha seleccionada.";
+            }
+
+            return View(pedidoViewModel);
+        }
 
 
 
 
-        public async Task<IActionResult> DescargarPDF(string fecha)
+        public async Task<IActionResult> CrearReporte(string fecha)
         {
 
             if (!DateTime.TryParse(fecha, out DateTime fechaConvertida))
@@ -96,7 +132,54 @@ namespace RestauranteSoftware.Controllers
 
             // Construir la URL completa de la vista que se desea convertir a PDF
             string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
-            string urlPagina = $"{baseUrl}/PedidosEntitys/VistaParaPDF?fecha={fecha}";
+            string urlPagina = $"{baseUrl}/PedidosEntitys/Reporte?fecha={fecha}";
+
+            // Configuración del documento PDF
+            var pdf = new HtmlToPdfDocument()
+            {
+                GlobalSettings = new GlobalSettings
+                {
+                    PaperSize = PaperKind.A4,
+                    Orientation = Orientation.Portrait,
+                    Margins = new MarginSettings { Top = 10, Bottom = 10, Left = 10, Right = 10 },
+                }
+            };
+
+            // Agrega los objetos (páginas) al documento PDF
+            pdf.Objects.Add(new ObjectSettings
+            {
+                Page = urlPagina,
+                WebSettings = new WebSettings
+                {
+                    DefaultEncoding = "utf-8",
+                    Background = false // Esto deshabilita imágenes de fondo
+                }
+            });
+
+            // Convierte el documento a PDF
+            var archivoPDF = _converter.Convert(pdf);
+
+            // Genera un nombre único para el archivo PDF
+            string nombrePDF = $"reporte_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
+
+            // Devuelve el archivo PDF como una descarga
+            return File(archivoPDF, "application/pdf", nombrePDF);
+        }
+
+
+
+        public async Task<IActionResult> CrearReportePagados(string fecha)
+        {
+
+            if (!DateTime.TryParse(fecha, out DateTime fechaConvertida))
+            {
+                // Manejar error si la fecha no es válida
+                return BadRequest("Fecha inválida.");
+            }
+
+            // Construir la URL completa de la vista que se desea convertir a PDF
+            string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+            string urlPagina = $"{baseUrl}/PedidosEntitys/ReportePagados?fecha={fecha}";
 
             // Configuración del documento PDF
             var pdf = new HtmlToPdfDocument()
@@ -136,13 +219,11 @@ namespace RestauranteSoftware.Controllers
 
 
 
-
-
-
-
         // GET: PedidosEntitys
         public async Task<IActionResult> Index()
         {
+
+            ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre");
             var applicationDbContext = _context.Pedidos
                 .Include(p => p.EstadoPedido)
                 .OrderByDescending(p => p.IsPrioridad) // Prioritarios primero
