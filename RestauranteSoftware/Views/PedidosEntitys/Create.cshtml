@@ -1,141 +1,142 @@
-﻿@* Se define el modelo que se utilizará para la vista, en este caso el ViewModel 'PedidosComidas' *@
-@model RestauranteSoftware.viewModels.PedidosComidas
+﻿@model RestauranteSoftware.viewModels.PedidosComidas
 
 @{
-    // Título de la página que se mostrará en la cabecera
     ViewData["Title"] = "Create";
 }
 
-<h1 class="mb-4">Create Pedido</h1>
+<h1 class="mb-4 text-center">Crear Pedido</h1>
 
 <div class="row">
-    <div class="col-lg-6 mb-4">
-        <div>
-            @* Sección que muestra la lista de comidas seleccionadas *@
-            <h5 class="mb-3">Lista de Comidas Seleccionadas</h5>
-            <div class="p-3 rounded">
-                <table class="table table-striped" id="tablaComida">
-                    <thead>
+    <!-- Lista de comidas seleccionadas -->
+    <div class="col-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Lista de Comidas Seleccionadas</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-responsive-sm" id="tablaComida">
+                    <thead class="table-light">
                         <tr>
-                            <th scope="col">Numero</th>
-                            <th scope="col">Nombre de la Comida</th>
-                           
+                            <th scope="col">#</th>
+                            <th scope="col">Nombre</th>
                             <th scope="col">Cantidad</th>
-                            <th scope="col">Precio Total</th>
-                            <th scope="col" class="opacity-0">Eliminar </th>
-                          @*   <th scope="col" class="opacity-0">ID</th> *@
+                            <th scope="col">Total</th>
+                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @* Verificamos si la lista de comidas seleccionadas no está vacía y tiene elementos *@
                         @if (Model.ListaComida.getIdCom() != null && Model.ListaComida.getIdCom().Count > 0)
                         {
-                            // Se obtienen las listas de IDs, cantidades, totales y nombres de las comidas
                             var listID = Model.ListaComida.getIdCom();
                             var listCant = Model.ListaComida.getCant();
                             var listTotal = Model.ListaComida.getTotal();
                             var listNom = Model.ListaComida.getNom();
 
-                            @* Bucle que recorre cada elemento de la lista para mostrarlo en la tabla *@
                             @for (int i = 0; i < listID.Count; i++)
                             {
-                                var indice = i + 1; // Contador de filas
                                 <tr>
-                                    <td>@indice</td>
+                                    <td>@(i + 1)</td>
                                     <td>@listNom[i]</td>
-                                   
                                     <td>
-                                        @* Campo que muestra la cantidad seleccionada, solo lectura *@
-                                        <input type="number" value="@listCant[i]" class="form-control" style="width: 60px;" readonly />
+                                        <input type="number" value="@listCant[i]" class="form-control" readonly />
                                     </td>
                                     <td>
-                                        @* Campo que muestra el precio total, solo lectura *@
-                                        <input type="number" value="@listTotal[i]" class="form-control precioTotal" style="width: 100px;" readonly />
+                                        <input type="number" value="@listTotal[i]" class="form-control precioTotal" readonly />
                                     </td>
-                                    <td class="bg-transparent">
-                                        <form class="bg-transparent" asp-action="DeleteComidas" method="post" asp-route-id="@listID[i]">
-                                            <button class="btn btn-sm btn-outline-danger" type="submit">Eliminar</button>
+                                    <td>
+                                        <form asp-action="DeleteComidas" method="post" asp-route-id="@listID[i]">
+                                            <button class="btn btn-sm btn-danger" type="submit">Eliminar</button>
                                         </form>
                                     </td>
-                                   @*  <td class="opacity-0">@listID[i]</td> *@
                                 </tr>
                             }
                         }
                         else
                         {
-                            @* Mensaje que se muestra si no hay comidas seleccionadas *@
                             <tr>
-                                <td colspan="5" class="text-center">No hay comidas seleccionadas.</td>
+                                <td colspan="5" class="text-center text-muted">No hay comidas seleccionadas.</td>
                             </tr>
                         }
                     </tbody>
                 </table>
             </div>
-
-            @* Formulario para crear el pedido con campos de fecha, estado y total *@
-            <form class="row" asp-action="Create" class="needs-validation" asp-route-Mmodel="Model.IdComidas" novalidate>
-                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-
-                <div class="col-auto">
-                    <label asp-for="Pedido.NroMesa" class="control-label"></label>
-                    <input asp-for="Pedido.NroMesa" name="Nro" class="form-control" />
-                    <span asp-validation-for="Pedido.NroMesa" class="text-danger"></span>
-                </div>
-
-                <div class="col-auto">
-                    <label asp-for="Pedido.TotalPedido" class="form-label"></label>
-                    <input asp-for="Pedido.TotalPedido" name="Totalito" class="form-control" id="totalPedido" readonly />
-                    <span asp-validation-for="Pedido.TotalPedido" class="text-danger"></span>
-                </div>
-
-                <div class="col-auto">
-                    <label asp-for="Pedido.IsPrioridad" class="control-label"></label>
-                    <input asp-for="Pedido.IsPrioridad" name="IsPrioridad" aclass="form-check-input" type="checkbox" />
-                    <span asp-validation-for="Pedido.IsPrioridad" class="text-danger"></span>
-                </div>
-
-
-                <div class="col-auto">
-                    @* Botón de envío del formulario *@
-                    <br />
-                    <input type="submit" value="Crear" class="btn btn-primary" />
-                </div>
-            </form>
-           @*  Botón para regresar a la lista de pedidos *@
-            <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
-        </div>
-    </div>
-
-    <div class="col-lg-6">
-        <div class="mb-3">
-            <input type="text" id="searchBar" class="form-control" placeholder="Buscar comida por nombre..." onkeyup="filtrarComidas()" />
         </div>
 
-        <div class="row g-4" id="comidasContainer">
-            @for (int i = 0; i < Model.Comidas.Count; i++)
-            {
-                <div class="col-md-6 comida-item">
-                    <div class="card h-100 shadow-sm mb-3">
-                        <img src="@Model.Comidas[i].ImagenUrl" class="card-img-top" alt="Imagen de @Model.Comidas[i].Nombre" style="height: 10em">
-                        <div class="card-body">
-                            <h5 class="card-title">@Model.Comidas[i].Nombre</h5>
-                            <p class="card-text"><strong>Precio:</strong> Bs @Model.Comidas[i].Precio</p>
-                            <form asp-action="AddComidas" method="post" asp-route-id="@Model.Comidas[i].Id">
-                                <div class="input-group mb-3">
-                                    <input id="quantityInput_@i" name="quantity" type="number" min="1" class="form-control" value="1" />
-                                    <button type="submit" class="btn btn-outline-primary">Agregar</button>
-                                </div>
-                                <input type="hidden" name="nom" value="@Model.Comidas[i].Nombre" />
-                                <input type="hidden" name="precio" value="@Model.Comidas[i].Precio" />
-                            </form>
+
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">datos del pedido</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create" class="needs-validation" novalidate>
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label asp-for="Pedido.NroMesa" class="form-label">Número de Mesa</label>
+                            <input asp-for="Pedido.NroMesa" class="form-control" />
+                            <span asp-validation-for="Pedido.NroMesa" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <label asp-for="Pedido.TotalPedido" class="form-label">Total del Pedido</label>
+                            <input asp-for="Pedido.TotalPedido" class="form-control" id="totalPedido" readonly />
+                            <span asp-validation-for="Pedido.TotalPedido" class="text-danger"></span>
                         </div>
                     </div>
-                </div>
-            }
+
+
+
+                    <div class="form-check mb-3">
+                        <input asp-for="Pedido.IsPrioridad" class="form-check-input" type="checkbox" />
+                        <label asp-for="Pedido.IsPrioridad" class="form-check-label">Prioridad</label>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">Crear</button>
+                        <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Formulario de creación del pedido -->
+    <div class="col-6">
+        <!-- Lista de comidas disponibles -->
+        <div class="row">
+            <div class="col-12 mb-3">
+                <input type="text" id="searchBar" class="form-control" placeholder="Buscar comida por nombre..." onkeyup="filtrarComidas()" />
+            </div>
+            <div class="row" id="comidasContainer">
+                @for (int i = 0; i < Model.Comidas.Count; i++)
+                {
+                    <div class="col-md-6 col-lg-4 mb-4 comida-item">
+                        <div class="card h-100 shadow-sm">
+                            <img src="@Model.Comidas[i].ImagenUrl" class="card-img-top" alt="Imagen de @Model.Comidas[i].Nombre" style="height: 10em; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title">@Model.Comidas[i].Nombre</h5>
+                                <p class="card-text"><strong>Precio:</strong> Bs @Model.Comidas[i].Precio</p>
+                                <form asp-action="AddComidas" method="post" asp-route-id="@Model.Comidas[i].Id">
+                                    <div class="input-group">
+                                        <input id="quantityInput_@i" name="quantity" type="number" min="1" class="form-control" value="1" />
+                                        <button type="submit" class="btn btn-primary">Agregar</button>
+                                    </div>
+                                    <input type="hidden" name="nom" value="@Model.Comidas[i].Nombre" />
+                                    <input type="hidden" name="precio" value="@Model.Comidas[i].Precio" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
     </div>
-    </div>
 </div>
+
+   
 
 @section Scripts {
     @{
@@ -143,12 +144,10 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
-        // Calcula el total del pedido al cargar la página
         document.addEventListener("DOMContentLoaded", function () {
             calcularTotal();
         });
 
-        // Funciones que suman los precios totales de las comidas seleccionadas
         function calcularTotal() {
             let total = 0;
             document.querySelectorAll('.precioTotal').forEach(input => {
@@ -156,18 +155,14 @@
             });
             document.getElementById('totalPedido').value = total;
         }
-        // Función para filtrar comidas por nombre
+
         function filtrarComidas() {
             let filtro = document.getElementById('searchBar').value.toLowerCase();
             let comidas = document.querySelectorAll('.comida-item');
 
             comidas.forEach(comida => {
                 let nombre = comida.querySelector('.card-title').innerText.toLowerCase();
-                if (nombre.includes(filtro)) {
-                    comida.style.display = "block";
-                } else {
-                    comida.style.display = "none";
-                }
+                comida.style.display = nombre.includes(filtro) ? "block" : "none";
             });
         }
     </script>

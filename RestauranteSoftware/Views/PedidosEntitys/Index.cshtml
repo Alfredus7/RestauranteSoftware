@@ -8,7 +8,7 @@
 
 <div class="d-flex justify-content-between mb-3">
     
-    <button class="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#downloadModal">
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#downloadModal">
         crear reporte
     </button>
     <a asp-action="Create" class="btn btn-primary">Crear Nuevo Pedido</a>
@@ -19,7 +19,7 @@
 <div class="modal fade" id="downloadModal" tabindex="-1" aria-labelledby="downloadModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header  bg-primary text-white">
                 <h5 class="modal-title" id="downloadModalLabel">Ingrese una fecha valida</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
@@ -75,7 +75,7 @@
         <div class="modal fade" id="cambiarEstadoModal-@item.Id" tabindex="-1" aria-labelledby="cambiarEstadoModalLabel-@item.Id" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header  bg-primary text-white">
                         <h5 class="modal-title" id="cambiarEstadoModalLabel-@item.Id">Cambiar Estado</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                     </div>
@@ -106,7 +106,7 @@
         <div class="modal fade" id="detailsModal-@item.Id" tabindex="-1" aria-labelledby="detailsModalLabel-@item.Id" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                    <div class="modal-header border-0">
+                    <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title" id="detailsModalLabel-@item.Id">Detalles de Comidas - Pedido #@numPedido</h5> <!-- Usa el mismo número aquí -->
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                     </div>
