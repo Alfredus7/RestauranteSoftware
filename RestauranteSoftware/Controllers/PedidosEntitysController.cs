@@ -469,7 +469,7 @@ namespace RestauranteSoftware.Controllers
                 .Include(p => p.EstadoPedido)
                 .OrderByDescending(p => p.IsPrioridad) // Prioritarios primero
                 .ThenBy(p => p.Fecha)
-                .Where(p => p.EstadoId == 1 || p.EstadoId == 3);
+                .Where(p => p.EstadoPedido.Nombre == "pENDIENTES" || p.EstadoPedido.Nombre == "pROGRESO");
                 PedidosViews pedidoViewModel = new PedidosViews();
                 pedidoViewModel.pedidos = await applicationDbContext.ToListAsync();
                 pedidoViewModel.detallesPedidos = await _context.DetallesPedidos
@@ -483,7 +483,7 @@ namespace RestauranteSoftware.Controllers
                 .Include(p => p.EstadoPedido)
                 .OrderByDescending(p => p.IsPrioridad) // Prioritarios primero
                 .ThenBy(p => p.Fecha)
-                .Where(p => p.EstadoId == 1 || p.EstadoId == 3 || p.EstadoId == 4);
+                .Where(p => p.EstadoPedido.Nombre == "pENDIENTE" || p.EstadoPedido.Nombre == "pROGRESO" || p.EstadoPedido.Nombre == "cOMPLETADO");
                 PedidosViews pedidoViewModel = new PedidosViews();
                 pedidoViewModel.pedidos = await applicationDbContext.ToListAsync();
                 pedidoViewModel.detallesPedidos = await _context.DetallesPedidos
