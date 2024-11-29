@@ -6,7 +6,7 @@
     var fechaReporte = Model.pedidos.Any() ? Model.pedidos.Min(p => p.Fecha).ToString("dd/MM/yyyy") : string.Empty;
 }
 
-<h1>Reporte de Pedidos - Fecha: @fechaReporte</h1>
+<h1>Reporte de Ganancias - Fecha: @fechaReporte</h1>
 
 @if (ViewData["NoPedidos"] != null)
 {

@@ -32,10 +32,11 @@ namespace RestauranteSoftware.Controllers
                 return BadRequest("Fecha inválida.");
             }
 
-            // Filtrar pedidos por la fecha convertida
             var applicationDbContext = _context.Pedidos
-                .Include(p => p.EstadoPedido)
-                .Where(p => p.Fecha.Date == fechaConvertida.Date);
+            .Include(p => p.EstadoPedido)
+            .Where(p => p.Fecha.Date == fechaConvertida.Date
+                && p.EstadoPedido.Nombre == "Pagado" );
+
 
             // Crear el modelo de vista
             PedidosViews pedidoViewModel = new PedidosViews
@@ -46,7 +47,7 @@ namespace RestauranteSoftware.Controllers
                 // Filtrar detalles de pedidos relacionados
                 detallesPedidos = await _context.DetallesPedidos
                     .Include(x => x.Comida)
-                    .Where(dp => dp.Pedido.Fecha.Date == fechaConvertida.Date)
+                    .Where(dp => dp.Pedido.Fecha.Date == fechaConvertida.Date && (dp.Pedido.EstadoPedido.Nombre == "Pagado" || dp.Pedido.EstadoPedido.Nombre == "Completado"))
                     .ToListAsync()
             };
 
@@ -84,7 +85,7 @@ namespace RestauranteSoftware.Controllers
                 // Filtrar detalles de pedidos relacionados
                 detallesPedidos = await _context.DetallesPedidos
                     .Include(x => x.Comida)
-                    .Where(dp => dp.Pedido.Fecha.Date == fechaConvertida.Date && dp.Pedido.EstadoPedido.Nombre == "Pagado")
+                    .Where(dp => dp.Pedido.Fecha.Date == fechaConvertida.Date && (dp.Pedido.EstadoPedido.Nombre == "Pagado" || dp.Pedido.EstadoPedido.Nombre == "Completado"))
                     .ToListAsync()
             };
 
@@ -469,7 +470,7 @@ namespace RestauranteSoftware.Controllers
                 .Include(p => p.EstadoPedido)
                 .OrderByDescending(p => p.IsPrioridad) // Prioritarios primero
                 .ThenBy(p => p.Fecha)
-                .Where(p => p.EstadoPedido.Nombre == "pENDIENTES" || p.EstadoPedido.Nombre == "pROGRESO");
+                .Where(p => p.EstadoPedido.Nombre == "Pendientes" || p.EstadoPedido.Nombre == "Progreso");
                 PedidosViews pedidoViewModel = new PedidosViews();
                 pedidoViewModel.pedidos = await applicationDbContext.ToListAsync();
                 pedidoViewModel.detallesPedidos = await _context.DetallesPedidos
@@ -483,7 +484,7 @@ namespace RestauranteSoftware.Controllers
                 .Include(p => p.EstadoPedido)
                 .OrderByDescending(p => p.IsPrioridad) // Prioritarios primero
                 .ThenBy(p => p.Fecha)
-                .Where(p => p.EstadoPedido.Nombre == "pENDIENTE" || p.EstadoPedido.Nombre == "pROGRESO" || p.EstadoPedido.Nombre == "cOMPLETADO");
+                .Where(p => p.EstadoPedido.Nombre == "Pendientes" || p.EstadoPedido.Nombre == "Progreso" || p.EstadoPedido.Nombre == "Completado");
                 PedidosViews pedidoViewModel = new PedidosViews();
                 pedidoViewModel.pedidos = await applicationDbContext.ToListAsync();
                 pedidoViewModel.detallesPedidos = await _context.DetallesPedidos
