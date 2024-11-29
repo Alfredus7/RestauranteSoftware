@@ -343,7 +343,7 @@ namespace RestauranteSoftware.Controllers
                     throw;
                 }
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Comanda));
         }
         // GET: PedidosEntitys/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -461,20 +461,36 @@ namespace RestauranteSoftware.Controllers
 
         public async Task<IActionResult> Comanda()
         {
+
             ViewData["EstadoId"] = new SelectList(_context.EstadosPedidos, "Id", "Nombre");
-            var applicationDbContext = _context.Pedidos
+            if (User.IsInRole("Cocinero"))
+            {
+                var applicationDbContext = _context.Pedidos
                 .Include(p => p.EstadoPedido)
                 .OrderByDescending(p => p.IsPrioridad) // Prioritarios primero
                 .ThenBy(p => p.Fecha)
-                .Where(p => p.EstadoId == 1);
-
-            PedidosViews pedidoViewModel = new PedidosViews();
-            pedidoViewModel.pedidos = await applicationDbContext.ToListAsync();
-            pedidoViewModel.detallesPedidos = await _context.DetallesPedidos
-                .Include(x => x.Comida)
-                .ToListAsync();
-
-            return View(pedidoViewModel);
+                .Where(p => p.EstadoId == 1 || p.EstadoId == 3);
+                PedidosViews pedidoViewModel = new PedidosViews();
+                pedidoViewModel.pedidos = await applicationDbContext.ToListAsync();
+                pedidoViewModel.detallesPedidos = await _context.DetallesPedidos
+                    .Include(x => x.Comida)
+                    .ToListAsync();
+                return View(pedidoViewModel);
+            }
+            else
+            {
+                var applicationDbContext = _context.Pedidos
+                .Include(p => p.EstadoPedido)
+                .OrderByDescending(p => p.IsPrioridad) // Prioritarios primero
+                .ThenBy(p => p.Fecha)
+                .Where(p => p.EstadoId == 1 || p.EstadoId == 3 || p.EstadoId == 4);
+                PedidosViews pedidoViewModel = new PedidosViews();
+                pedidoViewModel.pedidos = await applicationDbContext.ToListAsync();
+                pedidoViewModel.detallesPedidos = await _context.DetallesPedidos
+                    .Include(x => x.Comida)
+                    .ToListAsync();
+                return View(pedidoViewModel);
+            }
         }
     }
 }

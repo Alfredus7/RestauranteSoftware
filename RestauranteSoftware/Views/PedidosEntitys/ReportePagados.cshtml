@@ -20,15 +20,11 @@ else
         <thead>
             <tr>
                 <th>Pedido #</th>
+                <th>Estado</th>
                 <th>Comidas</th>
-                <th>Precio Total</th>
             </tr>
         </thead>
         <tbody>
-            @{
-                decimal totalGeneral = 0;
-            }
-
             @foreach (var pedido in Model.pedidos)
             {
                 var detalles = Model.detallesPedidos.Where(d => d.PedidoId == pedido.Id).ToList();
@@ -37,7 +33,7 @@ else
                 // Fila para el pedido (se muestra una sola vez por pedido)
                 <tr>
                     <td rowspan="@rowSpan">@pedido.Id</td>
-            
+                    <td rowspan="@rowSpan">@pedido.EstadoPedido.Nombre</td>
 
                     <!-- Mostrar la primera comida del pedido -->
                     <td >@detalles.FirstOrDefault()?.Comida.Nombre</td>
@@ -53,15 +49,9 @@ else
                     </tr>
                 }
 
-                totalGeneral += pedido.TotalPedido;
+                
             }
         </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="3" class="text-end"><strong>Total General:</strong></td>
-                <td><strong>@totalGeneral Bs</strong></td>
-            </tr>
-        </tfoot>
     </table>
 }
 

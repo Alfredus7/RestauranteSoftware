@@ -74,17 +74,17 @@ namespace Data.Data.Entitys
 
         public void reacomodar()
         {
-            for (int j = 0; j < LIdCom.Count(); j++)
-            {
-                if (LIdCom[j] == null && j != LIdCom.Count())
-                {
-                    for (int i = j+1; i < LIdCom.Count(); i++)
-                    {
-                        LIdCom[j] = LIdCom[i];
+            //for (int j = 0; j < LIdCom.Count(); j++)
+            //{
+            //    if (LIdCom[j] == null && j != LIdCom.Count())
+            //    {
+            //        for (int i = j+1; i < LIdCom.Count(); i++)
+            //        {
+            //            LIdCom[j] = LIdCom[i];
 
-                    }
-                }
-            }
+            //        }
+            //    }
+            //}
         }
         public int buscar(int id)
         {
