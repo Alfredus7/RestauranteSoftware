@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_LayoutReport.cshtml";
     var fechaReporte = Model.pedidos.Any() ? Model.pedidos.Min(p => p.Fecha).ToString("dd/MM/yyyy") : string.Empty;
     var totalPedidos = Model.pedidos.Count(); // Total de pedidos
+   
 }
 
 <h1>Reporte de Cocinero - Fecha: @fechaReporte</h1>
@@ -30,11 +31,15 @@ else
             {
                 var detalles = Model.detallesPedidos.Where(d => d.PedidoId == pedido.Id).ToList();
                 var rowSpan = detalles.Count > 0 ? detalles.Count : 1;  // Asegura que rowSpan sea al menos 1
-
+                var nom = pedido.EstadoPedido.Nombre;
+                if (nom == "Pagado")
+                {
+                    nom = nom.Replace("Pagado", "Completado");
+                }
                 // Fila para el pedido (se muestra una sola vez por pedido)
                 <tr>
                     <td rowspan="@rowSpan">@pedido.Id</td>
-                    <td rowspan="@rowSpan">@pedido.EstadoPedido.Nombre</td>
+                    <td rowspan="@rowSpan">@nom</td>
 
                     <!-- Mostrar la primera comida del pedido -->
                     <td>@detalles.FirstOrDefault()?.Comida.Nombre</td>
