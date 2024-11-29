@@ -4,6 +4,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutReport.cshtml";
     var fechaReporte = Model.pedidos.Any() ? Model.pedidos.Min(p => p.Fecha).ToString("dd/MM/yyyy") : string.Empty;
+    var totalPedidos = Model.pedidos.Count(); // Total de pedidos
 }
 
 <h1>Reporte de Cocinero - Fecha: @fechaReporte</h1>
@@ -36,22 +37,21 @@ else
                     <td rowspan="@rowSpan">@pedido.EstadoPedido.Nombre</td>
 
                     <!-- Mostrar la primera comida del pedido -->
-                    <td >@detalles.FirstOrDefault()?.Comida.Nombre</td>
-                    <td rowspan="@rowSpan">@pedido.TotalPedido Bs</td>
+                    <td>@detalles.FirstOrDefault()?.Comida.Nombre</td>
                 </tr>
 
                 // Fila para cada comida del pedido (si hay más de una)
                 for (int i = 1; i < detalles.Count; i++)
                 {
-                    <tr >
-                        <!-- Estilo para quitar borde -->
-                        <td >@detalles[i].Comida.Nombre</td> <!-- Quitar borde a esta celda también -->
+                    <tr>
+                        <td>@detalles[i].Comida.Nombre</td>
                     </tr>
                 }
-
-                
             }
         </tbody>
     </table>
-}
 
+    <div class="mt-3">
+        <strong>cantidad pedidos: @totalPedidos</strong> <!-- Repetir el total al final si se desea -->
+    </div>
+}
