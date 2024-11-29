@@ -69,10 +69,11 @@ namespace RestauranteSoftware.Controllers
                 return BadRequest("Fecha inválida.");
             }
 
-            // Filtrar pedidos por la fecha y estado completado
             var applicationDbContext = _context.Pedidos
-                .Include(p => p.EstadoPedido)
-                .Where(p => p.Fecha.Date == fechaConvertida.Date && p.EstadoPedido. Nombre == "Pagado");
+            .Include(p => p.EstadoPedido)
+            .Where(p => p.Fecha.Date == fechaConvertida.Date
+                && (p.EstadoPedido.Nombre == "Pagado" || p.EstadoPedido.Nombre == "Completado"));
+
 
             // Crear el modelo de vista
             PedidosViews pedidoViewModel = new PedidosViews
@@ -464,7 +465,7 @@ namespace RestauranteSoftware.Controllers
             var applicationDbContext = _context.Pedidos
                 .Include(p => p.EstadoPedido)
                 .OrderByDescending(p => p.IsPrioridad) // Prioritarios primero
-                .ThenByDescending(p => p.Fecha)
+                .ThenBy(p => p.Fecha)
                 .Where(p => p.EstadoId == 1);
 
             PedidosViews pedidoViewModel = new PedidosViews();
