@@ -74,13 +74,13 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <label asp-for="Pedido.NroMesa" class="form-label">Número de Mesa</label>
-                            <input asp-for="Pedido.NroMesa" class="form-control" />
+                            <input asp-for="Pedido.NroMesa" name="Nro" class="form-control" />
                             <span asp-validation-for="Pedido.NroMesa" class="text-danger"></span>
                         </div>
 
                         <div class="col-lg-6">
                             <label asp-for="Pedido.TotalPedido" class="form-label">Total del Pedido</label>
-                            <input asp-for="Pedido.TotalPedido" class="form-control" id="totalPedido" readonly />
+                            <input asp-for="Pedido.TotalPedido" name="Totalito" class="form-control" id="totalPedido" readonly />
                             <span asp-validation-for="Pedido.TotalPedido" class="text-danger"></span>
                         </div>
                     </div>
@@ -88,7 +88,7 @@
 
 
                     <div class="form-check mb-3">
-                        <input asp-for="Pedido.IsPrioridad" class="form-check-input" type="checkbox" />
+                        <input asp-for="Pedido.IsPrioridad" name="IsPrioridad" class="form-check-input" type="checkbox" />
                         <label asp-for="Pedido.IsPrioridad" class="form-check-label">Prioridad</label>
                     </div>
 
