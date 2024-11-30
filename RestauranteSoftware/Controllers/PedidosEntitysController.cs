@@ -35,7 +35,7 @@ namespace RestauranteSoftware.Controllers
             var applicationDbContext = _context.Pedidos
             .Include(p => p.EstadoPedido)
             .Where(p => p.Fecha.Date == fechaConvertida.Date
-                && p.EstadoPedido.Nombre == "Pagado" );
+                && p.EstadoPedido.Nombre == "Pagado");
 
 
             // Crear el modelo de vista
@@ -188,7 +188,7 @@ namespace RestauranteSoftware.Controllers
             var archivoPDF = _converter.Convert(pdf);
 
             // Genera un nombre único para el archivo PDF
-            string nombrePDF = $"reporte_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
+            string nombrePDF = $"reporteCocinero_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
 
             // Devuelve el archivo PDF como una descarga
             return File(archivoPDF, "application/pdf", nombrePDF);
